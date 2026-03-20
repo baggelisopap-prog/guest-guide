@@ -346,7 +346,7 @@ function renderGuide() {
 
 function renderHome(places) {
   const imgStyle = currentProp.image_url ? `background-image:url(${currentProp.image_url})` : 'background:#1B3A5C';
-  return `<div class="hero" style="${imgStyle}"><div class="hero-overlay"><h2>${t('welcome')}</h2><p>${t('welcomeSub')}</p></div></div>
+  return `<div class="hero" style="${imgStyle}"><div class="hero-overlay"><h2>${currentProp.name}</h2><p>${t('guestGuide')}</p></div></div>
   <div class="quick-grid">
     <button class="quick-card" onclick="setSection('checkin')"><span class="quick-icon">🔑</span><span class="quick-label">${t('checkin')}</span><span class="quick-sub">${currentProp.checkin_time}</span></button>
     <button class="quick-card" onclick="setSection('places')"><span class="quick-icon">📍</span><span class="quick-label">${t('explore')}</span><span class="quick-sub">${places.length} ${t('places')}</span></button>
