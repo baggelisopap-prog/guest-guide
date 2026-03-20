@@ -148,35 +148,53 @@ let activeSection = 'home';
 let activeCat = null;
 let isLocked = false;
 
-function csvToArray(csv) {
-  const lines = [];
+const COL_MAP = {
+  Properties: ['property_id','name','region','address','address_en','checkin_time','checkout_time','wifi_name','wifi_pass','door_code','parking','parking_en','max_guests','maps_link','image_url'],
+  Places: ['name','name_en','category','subcategory','subcategory_en','region','property_id','description','description_en','price_range','phone','maps_link','our_pick'],
+  Rules: ['property_id','category','rule_text','rule_text_en','importance'],
+  Emergency: ['region','type','name','name_en','phone','maps_link','available'],
+  FAQ: ['property_id','category','question','question_en','answer','answer_en']
+};
+
+function csvParse(csv) {
+  const rows = [];
   let current = '';
-  let inQuotes = false;
+  let inQ = false;
   for (let i = 0; i < csv.length; i++) {
     const ch = csv[i];
-    if (ch === '"') { inQuotes = !inQuotes; continue; }
-    if (ch === '\n' && !inQuotes) { lines.push(current); current = ''; continue; }
-    if (ch === '\r' && !inQuotes) continue;
+    if (ch === '"') { inQ = !inQ; continue; }
+    if (ch === '\n' && !inQ) { rows.push(current); current = ''; continue; }
+    if (ch === '\r' && !inQ) continue;
     current += ch;
   }
-  if (current) lines.push(current);
-  if (lines.length < 2) return [];
-  const headers = lines[0].split(',').map(h => h.trim());
-  const result = [];
-  for (let i = 1; i < lines.length; i++) {
+  if (current) rows.push(current);
+  const parsed = [];
+  for (let i = 0; i < rows.length; i++) {
     const vals = [];
     let field = '';
-    let inQ = false;
-    for (let j = 0; j < lines[i].length; j++) {
-      const c = lines[i][j];
-      if (c === '"') { inQ = !inQ; continue; }
-      if (c === ',' && !inQ) { vals.push(field.trim()); field = ''; continue; }
+    let q = false;
+    for (let j = 0; j < rows[i].length; j++) {
+      const c = rows[i][j];
+      if (c === '"') { q = !q; continue; }
+      if (c === ',' && !q) { vals.push(field.trim()); field = ''; continue; }
       field += c;
     }
     vals.push(field.trim());
-    if (vals.length < headers.length) continue;
+    parsed.push(vals);
+  }
+  return parsed;
+}
+
+function csvToObjects(csv, tab) {
+  const parsed = csvParse(csv);
+  if (parsed.length < 2) return [];
+  const headers = COL_MAP[tab] || parsed[0];
+  const result = [];
+  for (let i = 1; i < parsed.length; i++) {
+    const row = parsed[i];
+    if (row.length < 2) continue;
     const obj = {};
-    headers.forEach((h, idx) => obj[h] = vals[idx] || '');
+    headers.forEach((h, idx) => obj[h] = (row[idx] || '').trim());
     result.push(obj);
   }
   return result;
@@ -186,7 +204,14 @@ async function fetchSheet(tab) {
   const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(tab)}`;
   const res = await fetch(url);
   const text = await res.text();
-  return csvToArray(text);
+  console.log('=== RAW CSV for ' + tab + ' (first 500 chars) ===');
+  console.log(text.substring(0, 500));
+  const result = csvToObjects(text, tab);
+  if (result.length > 0) {
+    console.log('=== First row parsed for ' + tab + ' ===');
+    console.log(JSON.stringify(result[0]));
+  }
+  return result;
 }
 
 async function loadData() {
