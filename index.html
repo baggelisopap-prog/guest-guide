@@ -39,6 +39,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 .back-btn{font-size:18px;padding:4px 8px;color:#fff}
 .header-title{font-weight:600;font-size:16px;color:#fff}
 .header-sub{font-size:12px;color:#9DC4E0}
+.header-link{font-size:12px;color:#9DC4E0;text-decoration:none;display:block}
 
 .nav{display:flex;overflow-x:auto;gap:2px;padding:8px 12px;background:#fff;border-bottom:1px solid #D0E1F0;position:sticky;top:54px;z-index:9}
 .nav-item{display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 12px;border-radius:10px;min-width:60px;transition:all .15s;color:#5BA4D9}
@@ -322,7 +323,7 @@ function renderGuide() {
 
   let html = `<div class="header">
     ${isLocked ? '' : '<button class="back-btn" onclick="goBack()">←</button>'}
-    <div style="flex:1"><div class="header-title">${currentProp.name}</div><div class="header-sub">${l(currentProp,'address')}</div></div>
+    <div style="flex:1"><div class="header-title">${currentProp.name}</div><a href="${currentProp.maps_link}" target="_blank" class="header-link"><span style="font-size:12px">📍</span> ${l(currentProp,'address')}</a></div>
     <button class="lang-btn-dark" onclick="toggleLang()">${lang==='el'?'EN 🇬🇧':'ΕΛ 🇬🇷'}</button>
   </div>`;
 
@@ -346,13 +347,14 @@ function renderGuide() {
 
 function renderHome(places) {
   const imgStyle = currentProp.image_url ? `background-image:url(${currentProp.image_url})` : 'background:#1B3A5C';
-  return `<div class="hero" style="${imgStyle}"><div class="hero-overlay"><h2>${currentProp.name}</h2><p>${t('guestGuide')}</p></div></div>
+  return `<div class="hero" style="${imgStyle}"><div class="hero-overlay"><h2>${t('welcome')}</h2><p>${t('welcomeSub')}</p></div></div>
   <div class="quick-grid">
     <button class="quick-card" onclick="setSection('checkin')"><span class="quick-icon">🔑</span><span class="quick-label">${t('checkin')}</span><span class="quick-sub">${currentProp.checkin_time}</span></button>
     <button class="quick-card" onclick="setSection('places')"><span class="quick-icon">📍</span><span class="quick-label">${t('explore')}</span><span class="quick-sub">${places.length} ${t('places')}</span></button>
     <button class="quick-card" onclick="setSection('rules')"><span class="quick-icon">📋</span><span class="quick-label">${t('rules')}</span><span class="quick-sub">${t('houseRulesShort')}</span></button>
     <button class="quick-card" onclick="setSection('emergency')"><span class="quick-icon">🆘</span><span class="quick-label">${t('help')}</span><span class="quick-sub">24/7</span></button>
-  </div>`;
+  </div>
+  ${currentProp.maps_link ? `<a href="${currentProp.maps_link}" target="_blank" class="maps-btn">${t('openMaps')}</a>` : ''}`;
 }
 
 function renderCheckin() {
