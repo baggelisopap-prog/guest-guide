@@ -158,31 +158,23 @@ const COL_MAP = {
 
 function csvParse(csv) {
   const rows = [];
-  let current = '';
+  let row = [];
+  let field = '';
   let inQ = false;
   for (let i = 0; i < csv.length; i++) {
     const ch = csv[i];
-    if (ch === '"') { inQ = !inQ; continue; }
-    if (ch === '\n' && !inQ) { rows.push(current); current = ''; continue; }
-    if (ch === '\r' && !inQ) continue;
-    current += ch;
-  }
-  if (current) rows.push(current);
-  const parsed = [];
-  for (let i = 0; i < rows.length; i++) {
-    const vals = [];
-    let field = '';
-    let q = false;
-    for (let j = 0; j < rows[i].length; j++) {
-      const c = rows[i][j];
-      if (c === '"') { q = !q; continue; }
-      if (c === ',' && !q) { vals.push(field.trim()); field = ''; continue; }
-      field += c;
+    if (ch === '"') {
+      if (inQ && csv[i+1] === '"') { field += '"'; i++; continue; }
+      inQ = !inQ;
+      continue;
     }
-    vals.push(field.trim());
-    parsed.push(vals);
+    if (ch === ',' && !inQ) { row.push(field); field = ''; continue; }
+    if (ch === '\n' && !inQ) { row.push(field); rows.push(row); row = []; field = ''; continue; }
+    if (ch === '\r' && !inQ) continue;
+    field += ch;
   }
-  return parsed;
+  if (field || row.length) { row.push(field); rows.push(row); }
+  return rows;
 }
 
 function csvToObjects(csv, tab) {
