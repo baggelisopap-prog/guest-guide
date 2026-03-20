@@ -146,6 +146,7 @@ let lang = 'el';
 let currentProp = null;
 let activeSection = 'home';
 let activeCat = null;
+let isLocked = false;
 
 function csvToArray(csv) {
   const lines = [];
@@ -245,6 +246,7 @@ function selectProp(id) {
 }
 
 function goBack() {
+  if (isLocked) return;
   currentProp = null;
   activeSection = 'home';
   activeCat = null;
@@ -302,7 +304,7 @@ function renderGuide() {
   ];
 
   let html = `<div class="header">
-    <button class="back-btn" onclick="goBack()">←</button>
+    ${isLocked ? '' : '<button class="back-btn" onclick="goBack()">←</button>'}
     <div style="flex:1"><div class="header-title">${currentProp.name}</div><div class="header-sub">${l(currentProp,'address')}</div></div>
     <button class="lang-btn-dark" onclick="toggleLang()">${lang==='el'?'EN 🇬🇧':'ΕΛ 🇬🇷'}</button>
   </div>`;
@@ -434,7 +436,7 @@ const directProp = urlParams.get('p');
 loadData().then(() => {
   if (directProp) {
     const found = DATA.properties.find(p => p.property_id === directProp);
-    if (found) { currentProp = found; render(); }
+    if (found) { currentProp = found; isLocked = true; render(); }
   }
 });
 </script>
