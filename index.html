@@ -3,30 +3,47 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>Sea Alure · Guest Guide</title>
 <link rel="icon" href="logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:#F4F8FB;color:#1B3A5C;min-height:100vh;max-width:480px;margin:0 auto}
+body{font-family:'DM Sans',system-ui,-apple-system,sans-serif;background:#F4F8FB;color:#1B3A5C;min-height:100vh;max-width:480px;margin:0 auto;overflow-x:hidden}
 a{color:inherit;text-decoration:none}
 button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit;font-size:inherit}
-
+.splash{position:fixed;inset:0;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;transition:opacity .8s cubic-bezier(.4,0,.2,1),transform .8s cubic-bezier(.4,0,.2,1)}
+.splash-bg{position:absolute;inset:0;background:linear-gradient(170deg,#0a1628 0%,#132d4f 40%,#1B3A5C 70%,#1a4a6e 100%)}
+.splash-bg::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(ellipse at 30% 50%,rgba(137,212,245,.06) 0%,transparent 60%),radial-gradient(ellipse at 70% 30%,rgba(137,212,245,.04) 0%,transparent 50%);animation:shimmer 8s ease-in-out infinite}
+@keyframes shimmer{0%,100%{transform:translate(0,0)}50%{transform:translate(2%,1%)}}
+.splash.hide{opacity:0;transform:scale(1.05);pointer-events:none}
+.splash-content{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center}
+.splash-logo-wrap{width:130px;height:130px;border-radius:50%;padding:4px;background:linear-gradient(135deg,rgba(255,255,255,.15),rgba(255,255,255,.05));opacity:0;transform:scale(.6);animation:logoReveal 1.2s cubic-bezier(.34,1.56,.64,1) .3s forwards;position:relative}
+.splash-logo-wrap::after{content:'';position:absolute;inset:-8px;border-radius:50%;border:1px solid rgba(137,212,245,.1);opacity:0;animation:ringFade 1s ease-out .8s forwards}
+.splash-logo-img{width:100%;height:100%;border-radius:50%;object-fit:cover}
+.splash-divider{width:40px;height:1px;background:linear-gradient(90deg,transparent,rgba(137,212,245,.4),transparent);margin:20px 0 16px;opacity:0;animation:fadeIn .8s ease-out 1.3s forwards}
+.splash-name{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:500;color:#fff;letter-spacing:1px;opacity:0;transform:translateY(10px);animation:slideUp .8s ease-out 1.5s forwards}
+.splash-loc{font-size:12px;color:rgba(137,212,245,.6);margin-top:6px;letter-spacing:1.5px;text-transform:uppercase;opacity:0;transform:translateY(8px);animation:slideUp .7s ease-out 1.8s forwards}
+.splash-loader{margin-top:36px;width:50px;height:2px;background:rgba(255,255,255,.06);border-radius:2px;overflow:hidden;opacity:0;animation:fadeIn .4s ease-out 2.2s forwards}
+.splash-loader-bar{height:100%;width:0%;background:linear-gradient(90deg,rgba(137,212,245,.3),rgba(137,212,245,.7));border-radius:2px;animation:loadBar 1.5s ease-in-out 2.4s forwards}
+@keyframes logoReveal{to{opacity:1;transform:scale(1)}}
+@keyframes ringFade{0%{opacity:0;transform:scale(.8)}100%{opacity:1;transform:scale(1)}}
+@keyframes fadeIn{to{opacity:1}}
+@keyframes slideUp{to{opacity:1;transform:translateY(0)}}
+@keyframes loadBar{to{width:100%}}
 .loading{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;gap:16px}
 .loading img{width:120px;height:120px;border-radius:50%;animation:pulse 2s ease-in-out infinite}
 .loading p{color:#5BA4D9;font-size:14px}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
-
 .select-screen{padding:20px 20px 40px;display:flex;flex-direction:column;align-items:center;gap:16px}
 .lang-row{width:100%;display:flex;justify-content:flex-end}
 .lang-btn{background:#E8F0F8;border-radius:8px;padding:6px 14px;font-size:13px;font-weight:600;color:#1B3A5C;letter-spacing:.5px}
-.lang-btn-dark{background:#1B3A5C;border-radius:8px;padding:6px 14px;font-size:13px;font-weight:600;color:#fff;letter-spacing:.5px}
+.lang-btn-dark{background:#1B3A5C;border-radius:20px;padding:6px 14px;font-size:11px;font-weight:600;color:#fff;letter-spacing:.5px}
 .logo-area{text-align:center;margin-bottom:12px}
 .logo-area img{width:160px;height:160px;border-radius:50%;object-fit:cover;margin-bottom:8px}
 .brand-sub{font-size:14px;color:#2E6B9E;text-transform:uppercase;letter-spacing:2px;margin-top:4px}
 .select-label{font-size:15px;color:#2E6B9E;margin:8px 0}
-
 .prop-card{width:100%;max-width:400px;display:flex;align-items:center;gap:14px;padding:12px;background:#fff;border:1px solid #D0E1F0;border-radius:14px;text-align:left}
 .prop-card:active{transform:scale(.98)}
 .prop-img{width:64px;height:64px;border-radius:10px;background-size:cover;background-position:center;flex-shrink:0;background-color:#E8F0F8}
@@ -34,35 +51,45 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 .prop-name{font-weight:600;font-size:16px}
 .prop-addr{font-size:13px;color:#5BA4D9}
 .prop-arrow{font-size:20px;color:#5BA4D9}
-
-.header{display:flex;align-items:center;gap:10px;padding:14px 16px;background:#89D4F5;position:sticky;top:0;z-index:10}
-.back-btn{font-size:18px;padding:4px 8px;color:#1B3A5C}
+.header{background:linear-gradient(135deg,#89D4F5 0%,#6BC4E8 100%);padding:14px 16px;display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:100}
+.back-btn{width:32px;height:32px;border-radius:50%;background:rgba(27,58,92,.1);display:flex;align-items:center;justify-content:center;color:#1B3A5C;font-size:16px}
 .header-title{font-weight:600;font-size:16px;color:#1B3A5C}
-.header-sub{font-size:12px;color:#1B3A5C}
-.header-link{font-size:12px;color:#1B3A5C;text-decoration:none;display:block}
-
-.nav{display:flex;overflow-x:auto;gap:2px;padding:8px 12px;background:#fff;border-bottom:1px solid #D0E1F0;position:sticky;top:54px;z-index:9}
-.nav-item{display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 12px;border-radius:10px;min-width:60px;transition:all .15s;color:#5BA4D9}
+.header-link{font-size:11px;color:#1B3A5C;opacity:.75;text-decoration:none;display:block}
+.nav{display:flex;gap:2px;padding:8px 10px;background:#fff;border-bottom:1px solid #E8F0F6;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.nav::-webkit-scrollbar{display:none}
+.nav-item{display:flex;flex-direction:column;align-items:center;gap:3px;min-width:52px;padding:6px;border-radius:10px;transition:all .2s;color:#5BA4D9}
 .nav-item.active{background:#1B3A5C;color:#fff}
-.nav-icon{font-size:18px}
-.nav-label{font-size:11px;font-weight:500}
-
-.content{padding:0 16px 80px}
-.hero{height:200px;border-radius:16px;background-size:cover;background-position:center;display:flex;align-items:flex-end;margin:16px 0;overflow:hidden}
-.hero-overlay{background:linear-gradient(transparent,rgba(0,0,0,.65));width:100%;padding:40px 20px 20px}
-.hero h2{color:#fff;font-size:26px;font-weight:700}
-.hero p{color:rgba(255,255,255,.85);font-size:14px;margin-top:4px}
-
-.quick-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:16px 0}
-.quick-card{display:flex;flex-direction:column;align-items:center;gap:4px;padding:18px 12px;background:#fff;border:1px solid #D0E1F0;border-radius:14px}
-.quick-card:active{transform:scale(.97)}
-.quick-icon{font-size:28px}
-.quick-label{font-weight:600;font-size:14px}
-.quick-sub{font-size:12px;color:#5BA4D9}
-
-.section-title{font-size:22px;font-weight:700;margin:20px 0 14px;letter-spacing:-.3px}
-
-.info-card{background:#fff;border:1px solid #D0E1F0;border-radius:14px;padding:4px 0}
+.nav-icon{font-size:15px}
+.nav-label{font-size:9px;font-weight:500;white-space:nowrap}
+.content{padding:0 0 80px}
+.welcome-banner{margin:14px 14px 10px;background:linear-gradient(135deg,#1B3A5C 0%,#2a5580 100%);border-radius:14px;padding:18px 20px;position:relative;overflow:hidden;animation:fadeUp .5s ease-out}
+.welcome-banner::after{content:'';position:absolute;top:-30px;right:-30px;width:100px;height:100px;background:rgba(137,212,245,.1);border-radius:50%}
+.welcome-banner::before{content:'';position:absolute;bottom:-20px;left:40px;width:60px;height:60px;background:rgba(137,212,245,.07);border-radius:50%}
+.welcome-banner h2{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:500;color:#fff;line-height:1.1;margin-bottom:3px;position:relative}
+.welcome-banner p{font-size:12px;color:rgba(255,255,255,.6);position:relative}
+.cards-section{padding:0 14px;margin-bottom:12px}
+.cards-section-label{font-size:10px;font-weight:600;color:#5BA4D9;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px;padding-left:2px}
+.big-cards{display:flex;gap:10px;margin-bottom:10px;animation:fadeUp .5s ease-out .1s both}
+.big-card{flex:1;background:linear-gradient(135deg,#E8F4FD 0%,#D4ECFA 100%);border-radius:14px;padding:16px 14px;text-align:center;border:1.5px solid #B8D8F0;transition:transform .2s}
+.big-card:active{transform:scale(.97)}
+.big-card .card-emoji{font-size:24px;margin-bottom:4px}
+.big-card .card-title{font-size:13px;font-weight:600;color:#1B3A5C;margin-bottom:2px}
+.big-card .card-sub{font-size:11px;color:#5BA4D9;font-weight:500}
+.grid-cards{display:grid;grid-template-columns:1fr 1fr;gap:10px;animation:fadeUp .5s ease-out .15s both}
+.grid-card{background:#fff;border-radius:14px;padding:14px 12px;text-align:center;border:1px solid #E4EEF5;transition:transform .2s}
+.grid-card:active{transform:scale(.97)}
+.grid-card .card-emoji{font-size:20px;margin-bottom:3px}
+.grid-card .card-title{font-size:12px;font-weight:600;color:#1B3A5C;margin-bottom:2px}
+.grid-card .card-sub{font-size:10px;color:#5BA4D9;font-weight:500}
+.map-section{padding:0 14px;margin-bottom:14px;animation:fadeUp .5s ease-out .2s both}
+.map-label{font-size:10px;font-weight:600;color:#5BA4D9;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px;padding-left:2px}
+.map-container{border-radius:16px;overflow:hidden;border:1px solid #E4EEF5;background:#fff}
+.map-placeholder{height:160px;background:linear-gradient(135deg,#b4dff0,#89D4F5);display:flex;align-items:center;justify-content:center;font-size:40px;cursor:pointer}
+.map-bottom{display:flex;align-items:center;justify-content:space-between;padding:10px 14px}
+.map-address{font-size:12px;color:#1B3A5C;font-weight:500}
+.map-open-btn{background:#1B3A5C;color:#fff;font-size:11px;font-weight:600;padding:7px 14px;border-radius:20px;display:flex;align-items:center;gap:4px}
+.section-title{font-size:20px;font-weight:700;margin:20px 14px 14px;letter-spacing:-.3px}
+.info-card{background:#fff;border:1px solid #D0E1F0;border-radius:14px;padding:4px 0;margin:0 14px}
 .info-row{display:flex;align-items:center;gap:12px;padding:12px 16px}
 .info-icon{font-size:20px;width:28px;text-align:center}
 .info-content{flex:1;display:flex;flex-direction:column}
@@ -71,13 +98,21 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 .copy-btn{background:#E8F0F8;border-radius:8px;padding:6px 10px;font-size:16px}
 .copy-btn:active{transform:scale(.9)}
 .divider{height:1px;background:#D0E1F0;margin:0 16px}
-.maps-btn{display:block;text-align:center;padding:14px;background:#1B3A5C;color:#fff;border-radius:12px;font-weight:600;font-size:15px;margin-top:14px}
-
-.cat-row{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px}
+.maps-btn{display:block;text-align:center;padding:14px;background:#1B3A5C;color:#fff;border-radius:12px;font-weight:600;font-size:15px;margin:14px 14px 0}
+.before-card{background:#fff;border:1px solid #D0E1F0;border-radius:14px;padding:16px;margin:0 14px 12px;line-height:1.7;font-size:14px;color:#3D6080}
+.hi-item{background:#fff;border:1px solid #D0E1F0;border-radius:12px;margin:0 14px 8px;overflow:hidden}
+.hi-header{display:flex;align-items:center;gap:12px;padding:14px 16px;cursor:pointer}
+.hi-header:active{background:#F4F8FB}
+.hi-icon{font-size:20px;width:28px;text-align:center}
+.hi-title{flex:1;font-weight:600;font-size:15px}
+.hi-chevron{font-size:12px;color:#5BA4D9;transition:transform .2s}
+.hi-body{padding:0 16px 14px;font-size:14px;color:#3D6080;line-height:1.7;display:none;border-top:1px solid #D0E1F0;padding-top:12px}
+.hi-item.open .hi-body{display:block}
+.hi-item.open .hi-chevron{transform:rotate(180deg)}
+.cat-row{display:flex;flex-wrap:wrap;gap:8px;margin:0 14px 16px}
 .cat-pill{padding:8px 14px;border-radius:20px;border:1px solid #D0E1F0;background:#fff;font-size:13px;font-weight:500;color:#1B3A5C;white-space:nowrap}
 .cat-pill.active{background:#1B3A5C;color:#fff;border-color:#1B3A5C}
-
-.place-card{background:#fff;border:1px solid #D0E1F0;border-radius:14px;padding:16px;margin-bottom:10px}
+.place-card{background:#fff;border:1px solid #D0E1F0;border-radius:14px;padding:16px;margin:0 14px 10px}
 .place-name{font-weight:600;font-size:16px;margin-bottom:6px;display:flex;flex-wrap:wrap;align-items:center;gap:8px}
 .pick-badge{display:inline-block;background:#FFF8E1;color:#B8860B;font-size:11px;font-weight:600;padding:3px 8px;border-radius:6px}
 .place-meta{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
@@ -86,378 +121,83 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 .place-desc{font-size:14px;color:#3D6080;margin:10px 0;line-height:1.5}
 .place-actions{display:flex;gap:8px}
 .place-action{padding:8px 14px;background:#E8F0F8;border-radius:8px;font-size:13px;font-weight:500;color:#1B3A5C}
-
-.rule-item{display:flex;gap:12px;align-items:flex-start;padding:14px 16px;background:#fff;border:1px solid #D0E1F0;border-radius:12px;margin-bottom:8px}
+.rule-item{display:flex;gap:12px;align-items:flex-start;padding:14px 16px;background:#fff;border:1px solid #D0E1F0;border-radius:12px;margin:0 14px 8px}
 .rule-item.high{border-color:#F4C963;background:#FFFDF4}
 .rule-icon{font-size:18px;flex-shrink:0;margin-top:1px}
 .rule-text{font-size:14px;line-height:1.5}
-
-.faq-item{width:100%;text-align:left;background:#fff;border:1px solid #D0E1F0;border-radius:12px;padding:14px 16px;margin-bottom:8px}
+.faq-item{width:calc(100% - 28px);text-align:left;background:#fff;border:1px solid #D0E1F0;border-radius:12px;padding:14px 16px;margin:0 14px 8px}
 .faq-q{display:flex;justify-content:space-between;align-items:center;gap:12px;font-weight:600;font-size:15px}
 .faq-chevron{font-size:12px;color:#5BA4D9;transition:transform .2s;flex-shrink:0}
 .faq-a{margin-top:10px;padding-top:10px;border-top:1px solid #D0E1F0;font-size:14px;color:#3D6080;line-height:1.6;display:none}
 .faq-item.open .faq-a{display:block}
 .faq-item.open .faq-chevron{transform:rotate(180deg)}
-
-.emergency-top{text-align:center;margin:0 0 20px}
+.emergency-top{text-align:center;margin:0 14px 20px}
 .emergency-big{display:inline-flex;flex-direction:column;align-items:center;gap:4px;padding:20px 40px;background:#C62828;color:#fff;border-radius:16px;font-weight:600}
 .emergency-big span:first-child{font-size:28px}
 .emergency-big span:nth-child(2){font-size:18px}
 .emergency-big span:last-child{font-size:13px;opacity:.9}
-
-.contact-card{display:flex;align-items:center;gap:12px;padding:14px 16px;background:#fff;border:1px solid #D0E1F0;border-radius:12px;margin-bottom:8px}
+.contact-card{display:flex;align-items:center;gap:12px;padding:14px 16px;background:#fff;border:1px solid #D0E1F0;border-radius:12px;margin:0 14px 8px}
 .contact-icon{font-size:24px;width:36px;text-align:center}
 .contact-info{flex:1;display:flex;flex-direction:column}
 .contact-name{font-weight:600;font-size:14px}
 .contact-avail{font-size:12px;color:#5BA4D9}
 .contact-actions{display:flex;gap:6px}
 .call-btn{display:flex;align-items:center;justify-content:center;width:40px;height:40px;background:#E8F0F8;border-radius:10px;font-size:18px}
-
-.footer{text-align:center;padding:20px;font-size:12px;color:#5BA4D9;opacity:.5}
+.footer{text-align:center;padding:16px 14px 24px}
+.footer-logo{font-size:11px;font-weight:600;color:#B8D0E0;letter-spacing:2px;text-transform:uppercase}
+.footer-sub{font-size:10px;color:#C8D8E4;margin-top:2px}
 .empty{text-align:center;color:#5BA4D9;padding:40px 0;font-size:14px}
 .hidden{display:none}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
 </style>
 </head>
 <body>
-
-<div id="loading" class="loading">
-  <img src="logo.png" alt="Sea Alure">
-  <p>Loading your guide...</p>
-</div>
-
+<div id="splash-container"></div>
+<div id="loading" class="loading"><img src="logo.png" alt="Sea Alure"><p>Loading your guide...</p></div>
 <div id="app" class="hidden"></div>
-
 <script>
-const SHEET_ID = '1hnxFZadQ78AX8IuvRTVAs3OmpSyUXJukP-2v3gFBmHM';
-const TABS = ['Properties','Places','Rules','Emergency','FAQ'];
-
-const T = {
-  el: { guestGuide:'Guest guide', selectProperty:'Επιλέξτε το κατάλυμά σας', welcome:'Καλώς ήρθατε!', welcomeSub:'Ό,τι χρειάζεστε, σε ένα μέρος', home:'Αρχική', checkin:'Check-in', explore:'Εξερεύνηση', rules:'Κανόνες', faq:'FAQ', help:'Βοήθεια', checkinInfo:'Check-in & πληροφορίες', checkout:'Check-out', doorCode:'Κωδικός πόρτας', wifiPassword:'Κωδικός WiFi', parking:'Parking', maxGuests:'Μέγιστοι επισκέπτες', openMaps:'📍 Άνοιγμα στο Google Maps', all:'Όλα', food:'Φαγητό', drinks:'Ποτό', cafe:'Καφές', beach:'Παραλία', attraction:'Αξιοθέατα', supermarket:'Super Market', weRecommend:'★ Προτείνουμε', map:'📍 Χάρτης', call:'📞 Κλήση', houseRules:'Κανόνες σπιτιού', faqTitle:'Συχνές ερωτήσεις', emergencyTitle:'Έκτακτη ανάγκη & επαφές', panEuropean:'Πανευρωπαϊκό', noPlaces:'Δεν βρέθηκαν μέρη.', places:'μέρη', houseRulesShort:'Σπιτιού' },
-  en: { guestGuide:'Guest guide', selectProperty:'Select your accommodation', welcome:'Welcome!', welcomeSub:'Everything you need, in one place', home:'Home', checkin:'Check-in', explore:'Explore', rules:'Rules', faq:'FAQ', help:'Help', checkinInfo:'Check-in & info', checkout:'Check-out', doorCode:'Door code', wifiPassword:'WiFi Password', parking:'Parking', maxGuests:'Max guests', openMaps:'📍 Open in Google Maps', all:'All', food:'Food', drinks:'Drinks', cafe:'Coffee', beach:'Beach', attraction:'Attractions', supermarket:'Supermarket', weRecommend:'★ Our pick', map:'📍 Map', call:'📞 Call', houseRules:'House rules', faqTitle:'Frequently asked questions', emergencyTitle:'Emergency & contacts', panEuropean:'Pan-European', noPlaces:'No places found.', places:'places', houseRulesShort:'House' }
-};
-
-const CAT_META = {
-  food:{icon:'🍽️',color:'#D85A30'}, drinks:{icon:'🍷',color:'#993556'}, cafe:{icon:'☕',color:'#BA7517'},
-  beach:{icon:'🏖️',color:'#378ADD'}, attraction:{icon:'🏛️',color:'#534AB7'}, supermarket:{icon:'🛒',color:'#1D9E75'}
-};
-const EM_ICONS = {host:'📞',cleaning:'🧹',hospital:'🏥',pharmacy:'💊',police:'👮',taxi:'🚕',emergency:'🆘'};
-
-let DATA = {};
-let lang = 'el';
-let currentProp = null;
-let activeSection = 'home';
-let activeCat = null;
-let isLocked = false;
-
-const COL_MAP = {
-  Properties: ['property_id','name','region','address','address_en','checkin_time','checkout_time','wifi_name','wifi_pass','door_code','parking','parking_en','max_guests','maps_link','image_url'],
-  Places: ['name','name_en','category','subcategory','subcategory_en','region','property_id','description','description_en','price_range','phone','maps_link','our_pick'],
-  Rules: ['property_id','category','rule_text','rule_text_en','importance'],
-  Emergency: ['region','type','name','name_en','phone','maps_link','available'],
-  FAQ: ['property_id','category','question','question_en','answer','answer_en']
-};
-
-function csvParse(csv) {
-  const rows = [];
-  let row = [];
-  let field = '';
-  let inQ = false;
-  for (let i = 0; i < csv.length; i++) {
-    const ch = csv[i];
-    if (ch === '"') {
-      if (inQ && csv[i+1] === '"') { field += '"'; i++; continue; }
-      inQ = !inQ;
-      continue;
-    }
-    if (ch === ',' && !inQ) { row.push(field); field = ''; continue; }
-    if (ch === '\n' && !inQ) { row.push(field); rows.push(row); row = []; field = ''; continue; }
-    if (ch === '\r' && !inQ) continue;
-    field += ch;
-  }
-  if (field || row.length) { row.push(field); rows.push(row); }
-  return rows;
-}
-
-function csvToObjects(csv, tab) {
-  const parsed = csvParse(csv);
-  if (parsed.length < 2) return [];
-  const headers = COL_MAP[tab] || parsed[0];
-  const result = [];
-  for (let i = 1; i < parsed.length; i++) {
-    const row = parsed[i];
-    if (row.length < 2) continue;
-    const obj = {};
-    headers.forEach((h, idx) => obj[h] = (row[idx] || '').trim());
-    result.push(obj);
-  }
-  return result;
-}
-
-async function fetchSheet(tab) {
-  const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(tab)}`;
-  const res = await fetch(url);
-  const text = await res.text();
-  console.log('=== RAW CSV for ' + tab + ' (first 500 chars) ===');
-  console.log(text.substring(0, 500));
-  const result = csvToObjects(text, tab);
-  if (result.length > 0) {
-    console.log('=== First row parsed for ' + tab + ' ===');
-    console.log(JSON.stringify(result[0]));
-  }
-  return result;
-}
-
-async function loadData() {
-  try {
-    const results = await Promise.all(TABS.map(t => fetchSheet(t)));
-    DATA.properties = results[0];
-    DATA.places = results[1];
-    DATA.rules = results[2];
-    DATA.emergency = results[3];
-    DATA.faq = results[4];
-    document.getElementById('loading').classList.add('hidden');
-    document.getElementById('app').classList.remove('hidden');
-    render();
-  } catch(e) {
-    document.querySelector('.loading p').textContent = 'Error loading data. Check Sheet permissions.';
-    console.error(e);
-  }
-}
-
-function t(key) { return T[lang][key] || key; }
-function l(obj, field) { return (lang === 'en' && obj[field+'_en']) ? obj[field+'_en'] : obj[field]; }
-
-function getPlaces() {
-  if (!currentProp) return [];
-  return DATA.places.filter(p => p.region === currentProp.region && (!p.property_id || p.property_id === currentProp.property_id));
-}
-function getRules() {
-  if (!currentProp) return [];
-  return DATA.rules.filter(r => r.property_id === 'ALL' || r.property_id === currentProp.property_id);
-}
-function getFaq() {
-  if (!currentProp) return [];
-  return DATA.faq.filter(f => f.property_id === 'ALL' || f.property_id === currentProp.property_id);
-}
-function getEmergency() {
-  if (!currentProp) return [];
-  return DATA.emergency.filter(e => e.region === currentProp.region || e.region === 'ALL');
-}
-
-function copyText(text, btn) {
-  navigator.clipboard.writeText(text).catch(()=>{});
-  btn.textContent = '✓';
-  setTimeout(() => btn.textContent = '📋', 2000);
-}
-
-function toggleLang() {
-  lang = lang === 'el' ? 'en' : 'el';
-  render();
-}
-
-function selectProp(id) {
-  currentProp = DATA.properties.find(p => p.property_id === id);
-  activeSection = 'home';
-  activeCat = null;
-  render();
-  window.scrollTo(0,0);
-}
-
-function goBack() {
-  if (isLocked) return;
-  currentProp = null;
-  activeSection = 'home';
-  activeCat = null;
-  render();
-  window.scrollTo(0,0);
-}
-
-function setSection(s) {
-  activeSection = s;
-  activeCat = null;
-  render();
-  document.querySelector('.content')?.scrollIntoView({behavior:'smooth'});
-}
-
-function setCat(c) {
-  activeCat = activeCat === c ? null : c;
-  render();
-}
-
-function toggleFaq(el) {
-  el.closest('.faq-item').classList.toggle('open');
-}
-
-function render() {
-  const app = document.getElementById('app');
-  if (!currentProp) {
-    app.innerHTML = renderSelect();
-  } else {
-    app.innerHTML = renderGuide();
-  }
-}
-
-function renderSelect() {
-  let html = `<div class="select-screen">
-    <div class="lang-row"><button class="lang-btn" onclick="toggleLang()">${lang==='el'?'EN 🇬🇧':'ΕΛ 🇬🇷'}</button></div>
-    <div class="logo-area"><img src="logo.png" alt="Sea Alure"><p class="brand-sub">${t('guestGuide')}</p></div>
-    <p class="select-label">${t('selectProperty')}</p>`;
-  DATA.properties.forEach(p => {
-    const imgStyle = p.image_url ? `background-image:url(${p.image_url})` : '';
-    html += `<button class="prop-card" onclick="selectProp('${p.property_id}')">
-      <div class="prop-img" style="${imgStyle}"></div>
-      <div class="prop-info"><span class="prop-name">${p.name}</span><span class="prop-addr">${l(p,'address')}</span></div>
-      <span class="prop-arrow">→</span></button>`;
-  });
-  html += '</div>';
-  return html;
-}
-
-function renderGuide() {
-  const places = getPlaces();
-  const navItems = [
-    {id:'home',label:t('home'),icon:'🏠'},{id:'checkin',label:t('checkin'),icon:'🔑'},
-    {id:'places',label:t('explore'),icon:'📍'},{id:'rules',label:t('rules'),icon:'📋'},
-    {id:'faq',label:t('faq'),icon:'❓'},{id:'emergency',label:t('help'),icon:'🆘'}
-  ];
-
-  let html = `<div class="header">
-    ${isLocked ? '' : '<button class="back-btn" onclick="goBack()">←</button>'}
-    <div style="flex:1"><div class="header-title">${currentProp.name}</div><a href="${currentProp.maps_link}" target="_blank" class="header-link"><span style="font-size:12px">📍</span> ${l(currentProp,'address')}</a></div>
-    <button class="lang-btn-dark" onclick="toggleLang()">${lang==='el'?'EN 🇬🇧':'ΕΛ 🇬🇷'}</button>
-  </div>`;
-
-  html += '<div class="nav">';
-  navItems.forEach(n => {
-    html += `<button class="nav-item ${activeSection===n.id?'active':''}" onclick="setSection('${n.id}')">
-      <span class="nav-icon">${n.icon}</span><span class="nav-label">${n.label}</span></button>`;
-  });
-  html += '</div><div class="content">';
-
-  if (activeSection === 'home') html += renderHome(places);
-  else if (activeSection === 'checkin') html += renderCheckin();
-  else if (activeSection === 'places') html += renderPlaces(places);
-  else if (activeSection === 'rules') html += renderRules();
-  else if (activeSection === 'faq') html += renderFaqSection();
-  else if (activeSection === 'emergency') html += renderEmergency();
-
-  html += '</div><div class="footer">Sea Alure Luxury Resorts © 2025</div>';
-  return html;
-}
-
-function renderHome(places) {
-  const imgStyle = currentProp.image_url ? `background-image:url(${currentProp.image_url})` : 'background:#1B3A5C';
-  return `<div class="hero" style="${imgStyle}"><div class="hero-overlay"><h2>${t('welcome')}</h2><p>${t('welcomeSub')}</p></div></div>
-  <div class="quick-grid">
-    <button class="quick-card" onclick="setSection('checkin')"><span class="quick-icon">🔑</span><span class="quick-label">${t('checkin')}</span><span class="quick-sub">${currentProp.checkin_time}</span></button>
-    <button class="quick-card" onclick="setSection('places')"><span class="quick-icon">📍</span><span class="quick-label">${t('explore')}</span><span class="quick-sub">${places.length} ${t('places')}</span></button>
-    <button class="quick-card" onclick="setSection('rules')"><span class="quick-icon">📋</span><span class="quick-label">${t('rules')}</span><span class="quick-sub">${t('houseRulesShort')}</span></button>
-    <button class="quick-card" onclick="setSection('emergency')"><span class="quick-icon">🆘</span><span class="quick-label">${t('help')}</span><span class="quick-sub">24/7</span></button>
-  </div>
-  ${currentProp.maps_link ? `<a href="${currentProp.maps_link}" target="_blank" class="maps-btn">${t('openMaps')}</a>` : ''}`;
-}
-
-function renderCheckin() {
-  const p = currentProp;
-  return `<h2 class="section-title">${t('checkinInfo')}</h2>
-  <div class="info-card">
-    ${infoRow('🕐',t('checkin'),p.checkin_time)}
-    ${infoRow('🕐',t('checkout'),p.checkout_time)}
-    <div class="divider"></div>
-    ${infoRow('🔑',t('doorCode'),p.door_code,true)}
-    <div class="divider"></div>
-    ${infoRow('📶','WiFi',p.wifi_name,true)}
-    ${infoRow('🔒',t('wifiPassword'),p.wifi_pass,true)}
-    <div class="divider"></div>
-    ${infoRow('🅿️',t('parking'),l(p,'parking'))}
-    ${infoRow('👥',t('maxGuests'),p.max_guests)}
-  </div>
-  ${p.maps_link ? `<a href="${p.maps_link}" target="_blank" class="maps-btn">${t('openMaps')}</a>` : ''}`;
-}
-
-function infoRow(icon, label, value, canCopy) {
-  const copyHtml = canCopy ? `<button class="copy-btn" onclick="copyText('${(value||'').replace(/'/g,"\\'")}',this)">📋</button>` : '';
-  return `<div class="info-row"><span class="info-icon">${icon}</span><div class="info-content"><span class="info-label">${label}</span><span class="info-value">${value||''}</span></div>${copyHtml}</div>`;
-}
-
-function renderPlaces(places) {
-  const filtered = activeCat ? places.filter(p => p.category === activeCat) : places;
-  const catLabels = {food:t('food'),drinks:t('drinks'),cafe:t('cafe'),beach:t('beach'),attraction:t('attraction'),supermarket:t('supermarket')};
-
-  let html = `<h2 class="section-title">${t('explore')}</h2><div class="cat-row">`;
-  html += `<button class="cat-pill ${!activeCat?'active':''}" onclick="setCat(null)">${t('all')}</button>`;
-  Object.entries(CAT_META).forEach(([key,meta]) => {
-    const count = places.filter(p => p.category === key).length;
-    if (count === 0) return;
-    const isActive = activeCat === key;
-    const style = isActive ? `background:${meta.color};border-color:${meta.color};color:#fff` : '';
-    html += `<button class="cat-pill ${isActive?'active':''}" style="${style}" onclick="setCat('${key}')">${meta.icon} ${catLabels[key]} (${count})</button>`;
-  });
-  html += '</div>';
-
-  if (filtered.length === 0) { html += `<p class="empty">${t('noPlaces')}</p>`; return html; }
-
-  filtered.forEach(place => {
-    const meta = CAT_META[place.category] || {icon:'📍',color:'#888'};
-    const isPick = place.our_pick === 'yes' || place.our_pick === 'TRUE' || place.our_pick === true;
-    html += `<div class="place-card">
-      <div class="place-name">${isPick ? `<span class="pick-badge">${t('weRecommend')}</span>` : ''}${l(place,'name')}</div>
-      <div class="place-meta"><span class="cat-tag" style="background:${meta.color}22;color:${meta.color}">${meta.icon} ${l(place,'subcategory')}</span>
-      ${place.price_range && place.price_range !== 'free' ? `<span class="price-tag">${place.price_range}</span>` : ''}</div>
-      <p class="place-desc">${l(place,'description')}</p>
-      <div class="place-actions">
-        ${place.maps_link ? `<a href="${place.maps_link}" target="_blank" class="place-action">${t('map')}</a>` : ''}
-        ${place.phone ? `<a href="tel:${place.phone}" class="place-action">${t('call')}</a>` : ''}
-      </div></div>`;
-  });
-  return html;
-}
-
-function renderRules() {
-  const rules = getRules();
-  let html = `<h2 class="section-title">${t('houseRules')}</h2>`;
-  rules.forEach(r => {
-    const isHigh = r.importance === 'high';
-    html += `<div class="rule-item ${isHigh?'high':''}"><span class="rule-icon">${isHigh?'⚠️':'ℹ️'}</span><span class="rule-text">${l(r,'rule_text')}</span></div>`;
-  });
-  return html;
-}
-
-function renderFaqSection() {
-  const faq = getFaq();
-  let html = `<h2 class="section-title">${t('faqTitle')}</h2>`;
-  faq.forEach(item => {
-    html += `<button class="faq-item" onclick="toggleFaq(this)">
-      <div class="faq-q"><span>${l(item,'question')}</span><span class="faq-chevron">▼</span></div>
-      <div class="faq-a">${l(item,'answer')}</div></button>`;
-  });
-  return html;
-}
-
-function renderEmergency() {
-  const contacts = getEmergency();
-  let html = `<h2 class="section-title">${t('emergencyTitle')}</h2>
-  <div class="emergency-top"><a href="tel:112" class="emergency-big"><span>🆘</span><span>112</span><span>${t('panEuropean')}</span></a></div>`;
-  contacts.filter(c => c.type !== 'emergency').forEach(c => {
-    html += `<div class="contact-card">
-      <span class="contact-icon">${EM_ICONS[c.type]||'📞'}</span>
-      <div class="contact-info"><span class="contact-name">${l(c,'name')}</span><span class="contact-avail">${c.available}</span></div>
-      <div class="contact-actions"><a href="tel:${c.phone}" class="call-btn">📞</a>
-      ${c.maps_link ? `<a href="${c.maps_link}" target="_blank" class="call-btn">📍</a>` : ''}</div></div>`;
-  });
-  return html;
-}
-
-// Handle direct property links: ?p=tinos-aegean-view
-const urlParams = new URLSearchParams(window.location.search);
-const directProp = urlParams.get('p');
-
-loadData().then(() => {
-  if (directProp) {
-    const found = DATA.properties.find(p => p.property_id === directProp);
-    if (found) { currentProp = found; isLocked = true; render(); }
-  }
-});
+const SHEET_ID='1hnxFZadQ78AX8IuvRTVAs3OmpSyUXJukP-2v3gFBmHM';
+const TABS=['Properties','HouseInstructions','Places','Rules','Emergency','FAQ'];
+const T={el:{guestGuide:'Guest guide',selectProperty:'Επιλέξτε το κατάλυμά σας',welcome:'Καλώς ήρθατε!',welcomeSub:'Ό,τι χρειάζεστε, σε ένα μέρος',home:'Αρχική',before:'Before',checkin:'Check-in',houseInstr:'Οδηγίες',explore:'Explore',rules:'Κανόνες',faq:'FAQ',sos:'SOS',checkinInfo:'Check-in & πληροφορίες',checkout:'Check-out',doorCode:'Κωδικός πόρτας',wifiPassword:'Κωδικός WiFi',parking:'Parking',maxGuests:'Μέγιστοι επισκέπτες',openMaps:'Πλοήγηση ↗',all:'Όλα',food:'Φαγητό',drinks:'Ποτό',cafe:'Καφές',beach:'Παραλία',attraction:'Αξιοθέατα',supermarket:'Super Market',weRecommend:'★ Προτείνουμε',map:'📍 Χάρτης',call:'📞 Κλήση',houseRules:'Κανόνες σπιτιού',faqTitle:'Συχνές ερωτήσεις',emergencyTitle:'Έκτακτη ανάγκη & επαφές',panEuropean:'Πανευρωπαϊκό',noPlaces:'Δεν βρέθηκαν μέρη.',places:'μέρη',beforeTitle:'Πριν την άφιξη',houseInstrTitle:'Οδηγίες σπιτιού',firstSteps:'Πρώτα βήματα',discover:'Ανακαλύψτε',location:'Τοποθεσία',arrivalGuide:'Οδηγίες άφιξης',addr:'Διεύθυνση',hi_parking:'Στάθμευση',hi_hot_water:'Ζεστό νερό',hi_heating:'Θέρμανση',hi_fireplace:'Τζάκι',hi_ac:'Κλιματισμός',hi_tv:'Τηλεόραση',hi_trash:'Σκουπίδια',hi_dishwasher:'Πλυντήριο πιάτων',hi_washer:'Πλυντήριο ρούχων',hi_iron:'Σίδερο',hi_bbq:'BBQ',hi_pool:'Πισίνα'},en:{guestGuide:'Guest guide',selectProperty:'Select your accommodation',welcome:'Welcome!',welcomeSub:'Everything you need, in one place',home:'Home',before:'Before',checkin:'Check-in',houseInstr:'House',explore:'Explore',rules:'Rules',faq:'FAQ',sos:'SOS',checkinInfo:'Check-in & info',checkout:'Check-out',doorCode:'Door code',wifiPassword:'WiFi Password',parking:'Parking',maxGuests:'Max guests',openMaps:'Navigate ↗',all:'All',food:'Food',drinks:'Drinks',cafe:'Coffee',beach:'Beach',attraction:'Attractions',supermarket:'Supermarket',weRecommend:'★ Our pick',map:'📍 Map',call:'📞 Call',houseRules:'House rules',faqTitle:'Frequently asked questions',emergencyTitle:'Emergency & contacts',panEuropean:'Pan-European',noPlaces:'No places found.',places:'places',beforeTitle:'Before arrival',houseInstrTitle:'House instructions',firstSteps:'First steps',discover:'Discover',location:'Location',arrivalGuide:'Arrival guide',addr:'Address',hi_parking:'Parking',hi_hot_water:'Hot water',hi_heating:'Heating',hi_fireplace:'Fireplace',hi_ac:'Air conditioning',hi_tv:'Television',hi_trash:'Trash',hi_dishwasher:'Dishwasher',hi_washer:'Washing machine',hi_iron:'Iron',hi_bbq:'BBQ',hi_pool:'Pool'}};
+const CAT_META={food:{icon:'🍽️',color:'#D85A30'},drinks:{icon:'🍷',color:'#993556'},cafe:{icon:'☕',color:'#BA7517'},beach:{icon:'🏖️',color:'#378ADD'},attraction:{icon:'🏛️',color:'#534AB7'},supermarket:{icon:'🛒',color:'#1D9E75'}};
+const EM_ICONS={host:'📞',cleaning:'🧹',hospital:'🏥',pharmacy:'💊',police:'👮',taxi:'🚕',emergency:'🆘'};
+const HI_ICONS={parking:'🅿️',hot_water:'🚿',heating:'♨️',fireplace:'🔥',ac:'❄️',tv:'📺',trash:'🗑️',dishwasher:'🍽️',washer:'👕',iron:'👔',bbq:'🔥',pool:'🏊'};
+const HI_FIELDS=['parking','hot_water','heating','fireplace','ac','tv','trash','dishwasher','washer','iron','bbq','pool'];
+const COL_MAP={Properties:['property_id','name','region','address','address_en','checkin_time','checkout_time','wifi_name','wifi_pass','door_code','parking','parking_en','max_guests','maps_link','image_url','check_in_directions','check_in_directions_en','drive_link'],HouseInstructions:['property_id','parking','parking_en','hot_water','hot_water_en','heating','heating_en','fireplace','fireplace_en','ac','ac_en','tv','tv_en','trash','trash_en','dishwasher','dishwasher_en','washer','washer_en','iron','iron_en','bbq','bbq_en','pool','pool_en'],Places:['name','name_en','category','subcategory','subcategory_en','region','property_id','description','description_en','price_range','phone','maps_link','our_pick'],Rules:['property_id','category','rule_text','rule_text_en','importance'],Emergency:['region','type','name','name_en','phone','maps_link','available'],FAQ:['property_id','category','question','question_en','answer','answer_en']};
+let DATA={},lang='el',currentProp=null,currentHI=null,activeSection='home',activeCat=null;
+function csvParse(csv){const rows=[];let row=[],field='',inQ=false;for(let i=0;i<csv.length;i++){const ch=csv[i];if(ch==='"'){if(inQ&&csv[i+1]==='"'){field+='"';i++;continue}inQ=!inQ;continue}if(ch===','&&!inQ){row.push(field);field='';continue}if(ch==='\n'&&!inQ){row.push(field);rows.push(row);row=[];field='';continue}if(ch==='\r'&&!inQ)continue;field+=ch}if(field||row.length){row.push(field);rows.push(row)}return rows}
+function csvToObjects(csv,tab){const parsed=csvParse(csv);if(parsed.length<2)return[];const headers=COL_MAP[tab]||parsed[0];const result=[];for(let i=1;i<parsed.length;i++){const r=parsed[i];if(r.length<2)continue;const obj={};headers.forEach((h,idx)=>obj[h]=(r[idx]||'').trim());result.push(obj)}return result}
+async function fetchSheet(tab){const url=`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(tab)}`;const res=await fetch(url);const text=await res.text();return csvToObjects(text,tab)}
+async function loadData(){try{const results=await Promise.all(TABS.map(t=>fetchSheet(t)));DATA.properties=results[0];DATA.houseInstructions=results[1];DATA.places=results[2];DATA.rules=results[3];DATA.emergency=results[4];DATA.faq=results[5];return true}catch(e){document.querySelector('.loading p').textContent='Error loading data.';console.error(e);return false}}
+function t(key){return T[lang][key]||key}
+function l(obj,field){return(lang==='en'&&obj[field+'_en'])?obj[field+'_en']:obj[field]}
+function getPlaces(){if(!currentProp)return[];return DATA.places.filter(p=>p.region===currentProp.region&&(!p.property_id||p.property_id===currentProp.property_id))}
+function getRules(){if(!currentProp)return[];return DATA.rules.filter(r=>r.property_id==='ALL'||r.property_id===currentProp.property_id)}
+function getFaq(){if(!currentProp)return[];return DATA.faq.filter(f=>f.property_id==='ALL'||f.property_id===currentProp.property_id)}
+function getEmergency(){if(!currentProp)return[];return DATA.emergency.filter(e=>e.region===currentProp.region||e.region==='ALL')}
+function getHI(){if(!currentProp)return null;return DATA.houseInstructions.find(h=>h.property_id===currentProp.property_id)||null}
+function copyText(text,btn){navigator.clipboard.writeText(text).catch(()=>{});btn.textContent='✓';setTimeout(()=>btn.textContent='📋',2000)}
+function toggleLang(){lang=lang==='el'?'en':'el';render()}
+function selectProp(id){currentProp=DATA.properties.find(p=>p.property_id===id);currentHI=getHI();activeSection='home';activeCat=null;render();window.scrollTo(0,0)}
+function goBack(){currentProp=null;currentHI=null;activeSection='home';activeCat=null;render();window.scrollTo(0,0)}
+function setSection(s){activeSection=s;activeCat=null;render();document.querySelector('.content')?.scrollIntoView({behavior:'smooth'})}
+function setCat(c){activeCat=activeCat===c?null:c;render()}
+function toggleAccordion(el){el.closest('.faq-item,.hi-item').classList.toggle('open')}
+function showSplash(){if(!currentProp)return;const imgUrl=currentProp.image_url||'logo.png';const addr=l(currentProp,'address').toUpperCase();document.getElementById('splash-container').innerHTML=`<div class="splash" id="splash"><div class="splash-bg"></div><div class="splash-content"><div class="splash-logo-wrap"><img class="splash-logo-img" src="${imgUrl}" alt="" onerror="this.src='logo.png'"></div><div class="splash-divider"></div><div class="splash-name">${currentProp.name}</div><div class="splash-loc">${addr}</div><div class="splash-loader"><div class="splash-loader-bar"></div></div></div></div>`;setTimeout(()=>{const sp=document.getElementById('splash');if(sp)sp.classList.add('hide');setTimeout(()=>{document.getElementById('splash-container').innerHTML=''},900)},4000)}
+function render(){const app=document.getElementById('app');app.classList.remove('hidden');document.getElementById('loading').classList.add('hidden');if(!currentProp){app.innerHTML=renderSelect()}else{app.innerHTML=renderGuide()}}
+function renderSelect(){let html=`<div class="select-screen"><div class="lang-row"><button class="lang-btn" onclick="toggleLang()">${lang==='el'?'EN 🇬🇧':'ΕΛ 🇬🇷'}</button></div><div class="logo-area"><img src="logo.png" alt="Sea Alure"><p class="brand-sub">${t('guestGuide')}</p></div><p class="select-label">${t('selectProperty')}</p>`;DATA.properties.forEach(p=>{const imgStyle=p.image_url?`background-image:url(${p.image_url})`:'';html+=`<button class="prop-card" onclick="selectProp('${p.property_id}')"><div class="prop-img" style="${imgStyle}"></div><div class="prop-info"><span class="prop-name">${p.name}</span><span class="prop-addr">${l(p,'address')}</span></div><span class="prop-arrow">→</span></button>`});html+='</div>';return html}
+function renderGuide(){const places=getPlaces();const navItems=[{id:'home',label:t('home'),icon:'🏠'},{id:'before',label:t('before'),icon:'🔑'},{id:'checkin',label:t('checkin'),icon:'🗝'},{id:'house',label:t('houseInstr'),icon:'🏠'},{id:'places',label:t('explore'),icon:'📍'},{id:'rules',label:t('rules'),icon:'📋'},{id:'faq',label:t('faq'),icon:'❓'},{id:'emergency',label:t('sos'),icon:'🆘'}];let html=`<div class="header"><button class="back-btn" onclick="goBack()">←</button><div style="flex:1"><div class="header-title">${currentProp.name}</div><a href="${currentProp.maps_link}" target="_blank" class="header-link">📍 ${l(currentProp,'address')}</a></div><button class="lang-btn-dark" onclick="toggleLang()">${lang==='el'?'EN 🇬🇧':'ΕΛ 🇬🇷'}</button></div>`;html+='<div class="nav">';navItems.forEach(n=>{html+=`<button class="nav-item ${activeSection===n.id?'active':''}" onclick="setSection('${n.id}')"><span class="nav-icon">${n.icon}</span><span class="nav-label">${n.label}</span></button>`});html+='</div><div class="content">';if(activeSection==='home')html+=renderHome(places);else if(activeSection==='before')html+=renderBefore();else if(activeSection==='checkin')html+=renderCheckin();else if(activeSection==='house')html+=renderHouseInstr();else if(activeSection==='places')html+=renderPlaces(places);else if(activeSection==='rules')html+=renderRules();else if(activeSection==='faq')html+=renderFaqSection();else if(activeSection==='emergency')html+=renderEmergency();html+='</div><div class="footer"><div class="footer-logo">Sea Alure</div><div class="footer-sub">Luxury Resorts</div></div>';return html}
+function renderHome(places){const hiCount=currentHI?HI_FIELDS.filter(f=>currentHI[f]).length:0;return`<div class="welcome-banner"><h2>${t('welcome')}</h2><p>${t('welcomeSub')}</p></div><div class="cards-section"><div class="cards-section-label">${t('firstSteps')}</div><div class="big-cards"><button class="big-card" onclick="setSection('before')"><div class="card-emoji">🔑</div><div class="card-title">Before Check-in</div><div class="card-sub">${t('arrivalGuide')}</div></button><button class="big-card" onclick="setSection('checkin')"><div class="card-emoji">🗝</div><div class="card-title">Check-in</div><div class="card-sub">${currentProp.checkin_time}</div></button></div></div><div class="cards-section"><div class="cards-section-label">${t('discover')}</div><div class="grid-cards"><button class="grid-card" onclick="setSection('house')"><div class="card-emoji">🏠</div><div class="card-title">${t('houseInstr')}</div><div class="card-sub">${hiCount} ${lang==='el'?'οδηγίες':'instructions'}</div></button><button class="grid-card" onclick="setSection('places')"><div class="card-emoji">📍</div><div class="card-title">${t('explore')}</div><div class="card-sub">${places.length} ${t('places')}</div></button><button class="grid-card" onclick="setSection('rules')"><div class="card-emoji">📋</div><div class="card-title">${t('rules')}</div><div class="card-sub">${lang==='el'?'Σπιτιού':'House'}</div></button><button class="grid-card" onclick="setSection('emergency')"><div class="card-emoji">🆘</div><div class="card-title">${t('sos')}</div><div class="card-sub">24/7</div></button></div></div><div class="map-section"><div class="map-label">${t('location')}</div><div class="map-container"><div class="map-placeholder" onclick="window.open('${currentProp.maps_link}','_blank')">📍</div><div class="map-bottom"><div class="map-address">📍 ${l(currentProp,'address')}</div><a class="map-open-btn" href="${currentProp.maps_link}" target="_blank">${t('openMaps')}</a></div></div></div>`}
+function renderBefore(){const p=currentProp;const dirs=l(p,'check_in_directions');return`<h2 class="section-title">${t('beforeTitle')}</h2>${dirs?`<div class="before-card">${dirs.replace(/\\n/g,'<br>')}</div>`:''}<div class="info-card">${infoRow('📍',t('addr'),l(p,'address'))}<div class="divider"></div>${infoRow('🔑',t('doorCode'),p.door_code,true)}<div class="divider"></div>${infoRow('🅿️',t('parking'),l(p,'parking'))}</div>${p.maps_link?`<a href="${p.maps_link}" target="_blank" class="maps-btn">📍 ${t('openMaps')}</a>`:''}`}
+function renderCheckin(){const p=currentProp;return`<h2 class="section-title">${t('checkinInfo')}</h2><div class="info-card">${infoRow('🕐',t('checkin'),p.checkin_time)}${infoRow('🕐',t('checkout'),p.checkout_time)}<div class="divider"></div>${infoRow('🔑',t('doorCode'),p.door_code,true)}<div class="divider"></div>${infoRow('📶','WiFi',p.wifi_name,true)}${infoRow('🔒',t('wifiPassword'),p.wifi_pass,true)}<div class="divider"></div>${infoRow('🅿️',t('parking'),l(p,'parking'))}${infoRow('👥',t('maxGuests'),p.max_guests)}</div>${p.maps_link?`<a href="${p.maps_link}" target="_blank" class="maps-btn">📍 ${t('openMaps')}</a>`:''}`}
+function infoRow(icon,label,value,canCopy){const copyHtml=canCopy?`<button class="copy-btn" onclick="copyText('${(value||'').replace(/'/g,"\\'")}',this)">📋</button>`:'';return`<div class="info-row"><span class="info-icon">${icon}</span><div class="info-content"><span class="info-label">${label}</span><span class="info-value">${value||''}</span></div>${copyHtml}</div>`}
+function renderHouseInstr(){if(!currentHI)return`<h2 class="section-title">${t('houseInstrTitle')}</h2><p class="empty">${lang==='el'?'Δεν υπάρχουν οδηγίες.':'No instructions available.'}</p>`;let html=`<h2 class="section-title">${t('houseInstrTitle')}</h2>`;HI_FIELDS.forEach(f=>{const val=l(currentHI,f);if(!val)return;const icon=HI_ICONS[f]||'📌';const label=t('hi_'+f);html+=`<div class="hi-item"><div class="hi-header" onclick="toggleAccordion(this)"><span class="hi-icon">${icon}</span><span class="hi-title">${label}</span><span class="hi-chevron">▼</span></div><div class="hi-body">${val.replace(/\\n/g,'<br>')}</div></div>`});return html}
+function renderPlaces(places){const filtered=activeCat?places.filter(p=>p.category===activeCat):places;const catLabels={food:t('food'),drinks:t('drinks'),cafe:t('cafe'),beach:t('beach'),attraction:t('attraction'),supermarket:t('supermarket')};let html=`<h2 class="section-title">${t('explore')}</h2><div class="cat-row">`;html+=`<button class="cat-pill ${!activeCat?'active':''}" onclick="setCat(null)">${t('all')}</button>`;Object.entries(CAT_META).forEach(([key,meta])=>{const count=places.filter(p=>p.category===key).length;if(count===0)return;const isActive=activeCat===key;const style=isActive?`background:${meta.color};border-color:${meta.color};color:#fff`:'';html+=`<button class="cat-pill ${isActive?'active':''}" style="${style}" onclick="setCat('${key}')">${meta.icon} ${catLabels[key]} (${count})</button>`});html+='</div>';if(filtered.length===0)return html+`<p class="empty">${t('noPlaces')}</p>`;filtered.forEach(place=>{const meta=CAT_META[place.category]||{icon:'📍',color:'#888'};const isPick=place.our_pick==='yes'||place.our_pick==='TRUE';html+=`<div class="place-card"><div class="place-name">${isPick?`<span class="pick-badge">${t('weRecommend')}</span>`:''}${l(place,'name')}</div><div class="place-meta"><span class="cat-tag" style="background:${meta.color}22;color:${meta.color}">${meta.icon} ${l(place,'subcategory')}</span>${place.price_range&&place.price_range!=='free'?`<span class="price-tag">${place.price_range}</span>`:''}</div><p class="place-desc">${l(place,'description')}</p><div class="place-actions">${place.maps_link?`<a href="${place.maps_link}" target="_blank" class="place-action">${t('map')}</a>`:''}${place.phone?`<a href="tel:${place.phone}" class="place-action">${t('call')}</a>`:''}</div></div>`});return html}
+function renderRules(){let html=`<h2 class="section-title">${t('houseRules')}</h2>`;getRules().forEach(r=>{const isHigh=r.importance==='high';html+=`<div class="rule-item ${isHigh?'high':''}"><span class="rule-icon">${isHigh?'⚠️':'ℹ️'}</span><span class="rule-text">${l(r,'rule_text')}</span></div>`});return html}
+function renderFaqSection(){let html=`<h2 class="section-title">${t('faqTitle')}</h2>`;getFaq().forEach(item=>{html+=`<button class="faq-item" onclick="toggleAccordion(this)"><div class="faq-q"><span>${l(item,'question')}</span><span class="faq-chevron">▼</span></div><div class="faq-a">${l(item,'answer')}</div></button>`});return html}
+function renderEmergency(){const contacts=getEmergency();let html=`<h2 class="section-title">${t('emergencyTitle')}</h2><div class="emergency-top"><a href="tel:112" class="emergency-big"><span>🆘</span><span>112</span><span>${t('panEuropean')}</span></a></div>`;contacts.filter(c=>c.type!=='emergency').forEach(c=>{html+=`<div class="contact-card"><span class="contact-icon">${EM_ICONS[c.type]||'📞'}</span><div class="contact-info"><span class="contact-name">${l(c,'name')}</span><span class="contact-avail">${c.available}</span></div><div class="contact-actions"><a href="tel:${c.phone}" class="call-btn">📞</a>${c.maps_link?`<a href="${c.maps_link}" target="_blank" class="call-btn">📍</a>`:''}</div></div>`});return html}
+const urlParams=new URLSearchParams(window.location.search);const directProp=urlParams.get('p');
+loadData().then(ok=>{if(!ok)return;if(directProp){const found=DATA.properties.find(p=>p.property_id===directProp);if(found){currentProp=found;currentHI=getHI();showSplash();setTimeout(()=>render(),100);return}}render()});
 </script>
 </body>
 </html>
