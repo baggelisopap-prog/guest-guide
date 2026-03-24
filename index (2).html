@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Alure · Guest Guide</title>
+<link rel="icon" href="logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+--pd:#1B3A5C;--pm:#2E6B9E;--pl:#6BA8CC;
+--hf:#EEF5FA;--ht:#D6EAF5;
+--s1:#071422;--s2:#0f2540;--s3:#1B3A5C;--s4:#163660;
+--sh:rgba(107,168,204,.05);--sh2:rgba(107,168,204,.03);
+--ac:#89D4F5;--am:rgba(137,212,245,.5);
+--bg:#F8F5F2;--bg2:#fff;--bor:#DDE9F3;--borl:#EEF4FA;
+--bcf:#EAF4FB;--bct:#D6EAF5;--bcb:#B8D8EE;--bcs:#2E7BB5;
+--wf:#1B3A5C;--wt:#2D5A8A;
+--btn:#1B3A5C;--lbg:#EEF4FA;
+}
+body.brand-ski{
+--pd:#C8D8B0;--pm:#7A9E6A;--pl:#5A7A4A;
+--hf:#0C1A10;--ht:#0A1410;
+--s1:#060E06;--s2:#0A1410;--s3:#111E14;--s4:#0C1A10;
+--sh:rgba(122,158,106,.05);--sh2:rgba(122,158,106,.03);
+--ac:#C8A84B;--am:rgba(200,168,75,.5);
+--bg:#0E1A12;--bg2:#111E14;--bor:rgba(200,168,75,.18);--borl:rgba(200,168,75,.1);
+--bcf:#111E14;--bct:#1A2E1A;--bcb:rgba(200,168,75,.25);--bcs:#C8A84B;
+--wf:#0C1A10;--wt:#152215;
+--btn:#1C3020;--lbg:rgba(200,168,75,.08);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(--pd);min-height:100vh;max-width:480px;margin:0 auto;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit;font-size:inherit}
+/* SPLASH */
+.splash{position:fixed;inset:0;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;transition:opacity .9s cubic-bezier(.4,0,.2,1),transform .9s cubic-bezier(.4,0,.2,1)}
+.splash-bg{position:absolute;inset:0;background:linear-gradient(170deg,var(--s1) 0%,var(--s2) 40%,var(--s3) 70%,var(--s4) 100%)}
+.splash-bg::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(ellipse at 30% 50%,var(--sh) 0%,transparent 60%),radial-gradient(ellipse at 70% 30%,var(--sh2) 0%,transparent 50%);animation:shimmer 8s ease-in-out infinite}
+@keyframes shimmer{0%,100%{transform:translate(0,0)}50%{transform:translate(2%,1%)}}
+.splash.hide{opacity:0;transform:scale(1.04);pointer-events:none}
+.splash-content{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center}
+.splash-logo-wrap{width:130px;height:130px;border-radius:50%;padding:4px;background:linear-gradient(135deg,rgba(255,255,255,.12),rgba(255,255,255,.04));opacity:0;transform:scale(.6);animation:logoReveal 1.2s cubic-bezier(.34,1.56,.64,1) .3s forwards;position:relative}
+.splash-arc{position:absolute;top:-42px;left:50%;transform:translateX(-50%);width:220px;height:110px;opacity:0;animation:fadeIn .8s ease-out 1s forwards}
+.splash-arc text{fill:rgba(255,255,255,.55);font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:400;letter-spacing:6px}
+.splash-logo-wrap::after{content:'';position:absolute;inset:-8px;border-radius:50%;border:1px solid rgba(255,255,255,.08);opacity:0;animation:ringFade 1s ease-out .8s forwards}
+.splash-logo-img{width:100%;height:100%;border-radius:50%;object-fit:cover}
+.splash-divider{width:30px;height:1px;background:linear-gradient(90deg,transparent,var(--am),transparent);margin:22px 0 18px;opacity:0;animation:fadeIn .8s ease-out 1.3s forwards}
+.splash-name{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:300;color:#fff;letter-spacing:2px;opacity:0;transform:translateY(10px);animation:slideUp .8s ease-out 1.5s forwards;font-style:italic}
+.splash-loc{font-size:11px;color:var(--am);margin-top:8px;letter-spacing:3px;text-transform:uppercase;opacity:0;transform:translateY(8px);animation:slideUp .7s ease-out 1.8s forwards;font-weight:300}
+.splash-loader{margin-top:40px;width:40px;height:1px;background:rgba(255,255,255,.08);overflow:hidden;opacity:0;animation:fadeIn .4s ease-out 2.2s forwards}
+.splash-loader-bar{height:100%;width:0%;background:linear-gradient(90deg,var(--am),var(--ac));animation:loadBar 1.6s ease-in-out 2.4s forwards}
+@keyframes logoReveal{to{opacity:1;transform:scale(1)}}
+@keyframes ringFade{0%{opacity:0;transform:scale(.8)}100%{opacity:1;transform:scale(1)}}
+@keyframes fadeIn{to{opacity:1}}
+@keyframes slideUp{to{opacity:1;transform:translateY(0)}}
+@keyframes loadBar{to{width:100%}}
+/* LOADING */
+.loading{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;gap:16px}
+.loading img{width:110px;height:110px;border-radius:50%;animation:pulse 2s ease-in-out infinite}
+.loading p{color:var(--pl);font-size:11px;letter-spacing:2.5px;text-transform:uppercase;font-weight:300}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+/* SELECT SCREEN */
+.select-screen{padding:24px 20px 40px;display:flex;flex-direction:column;align-items:center;gap:14px}
+.lang-row{width:100%;display:flex;justify-content:flex-end}
+.lang-btn{background:var(--lbg);border-radius:6px;padding:6px 14px;font-size:11px;font-weight:500;color:var(--pd);letter-spacing:1px}
+.lang-btn-dark{background:var(--btn);border-radius:20px;padding:5px 12px;font-size:10px;font-weight:500;color:#fff;letter-spacing:1px}
+.logo-area{text-align:center;margin:8px 0 4px}
+.logo-area img{width:150px;height:150px;border-radius:50%;object-fit:cover;margin-bottom:12px}
+.brand-name{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:400;color:var(--pd);letter-spacing:5px;text-transform:uppercase}
+.brand-sub{font-size:10px;color:var(--pl);text-transform:uppercase;letter-spacing:3px;margin-top:5px;font-weight:300}
+.select-label{font-size:10px;color:var(--pl);text-transform:uppercase;letter-spacing:2px;margin:6px 0 2px;font-weight:300}
+.prop-card{width:100%;max-width:400px;display:flex;align-items:center;gap:14px;padding:14px;background:var(--bg2);border:1px solid var(--bor);border-radius:12px;text-align:left;transition:transform .2s}
+.prop-card:active{transform:scale(.98)}
+.prop-img{width:60px;height:60px;border-radius:8px;background-size:cover;background-position:center;flex-shrink:0;background-color:var(--lbg)}
+.prop-info{flex:1;display:flex;flex-direction:column;gap:4px}
+.prop-name{font-weight:500;font-size:15px}
+.prop-addr{font-size:11px;color:var(--pl);letter-spacing:.3px;font-weight:300}
+.prop-arrow{color:var(--pl);flex-shrink:0;display:flex}
+/* HEADER */
+.header{background:var(--hf);padding:14px 16px;display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:100;border-bottom:1px solid var(--bor)}
+.back-btn{width:30px;height:30px;border-radius:50%;background:rgba(0,0,0,.06);display:flex;align-items:center;justify-content:center;color:var(--pd);flex-shrink:0}
+.header-prop{flex:1}
+.header-title{font-family:'Cormorant Garamond',serif;font-weight:500;font-size:18px;color:var(--pd);letter-spacing:.3px}
+.header-addr{font-size:9px;color:var(--pl);letter-spacing:1.5px;text-transform:uppercase;margin-top:2px;font-weight:300}
+/* NAV */
+.nav{display:flex;gap:1px;padding:6px 6px;background:var(--bg2);border-bottom:1px solid var(--borl);overflow-x:auto;-webkit-overflow-scrolling:touch}
+.nav::-webkit-scrollbar{display:none}
+.nav-item{display:flex;flex-direction:column;align-items:center;gap:3px;min-width:50px;padding:6px 4px;border-radius:8px;transition:all .2s;color:var(--pl)}
+.nav-item svg{stroke:var(--pl)}
+.nav-item.active{background:var(--btn)}
+.nav-item.active svg{stroke:#fff}
+.nav-item.active .nav-label{color:#fff}
+.nav-icon{display:flex;align-items:center;justify-content:center;height:20px}
+.nav-label{font-size:7.5px;font-weight:500;white-space:nowrap;letter-spacing:.5px;text-transform:uppercase;color:var(--pl)}
+.content{padding:0 0 90px}
+/* WELCOME */
+.welcome-banner{margin:14px 14px 10px;background:linear-gradient(135deg,var(--wf) 0%,var(--wt) 100%);border-radius:16px;padding:22px 22px;position:relative;overflow:hidden;animation:fadeUp .5s ease-out;border:1px solid var(--bcb)}
+.welcome-eyebrow{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--am);margin-bottom:7px;font-weight:300}
+.welcome-banner h2{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:300;color:#fff;line-height:1.1;margin-bottom:5px;font-style:italic;letter-spacing:.5px}
+.welcome-banner p{font-size:11px;color:rgba(255,255,255,.4);font-weight:300;letter-spacing:.5px}
+/* CARDS */
+.cards-section{padding:0 14px;margin-bottom:10px}
+.cards-section-label{font-size:9px;font-weight:500;color:var(--pl);text-transform:uppercase;letter-spacing:2.5px;margin-bottom:10px;padding:18px 2px 0}
+.big-cards{display:flex;gap:10px;margin-bottom:10px;animation:fadeUp .5s ease-out .1s both}
+.big-card{flex:1;background:linear-gradient(145deg,var(--bcf) 0%,var(--bct) 100%);border-radius:14px;padding:18px 14px;text-align:left;border:1px solid var(--bcb);transition:transform .2s;display:flex;flex-direction:column;gap:10px}
+.big-card svg{stroke:var(--bcs)}
+.big-card:active{transform:scale(.97)}
+.big-card .card-title{font-size:12px;font-weight:500;color:var(--pd);letter-spacing:.3px}
+.big-card .card-sub{font-size:10px;color:var(--bcs);font-weight:300;letter-spacing:.5px}
+.grid-cards{display:grid;grid-template-columns:1fr 1fr;gap:10px;animation:fadeUp .5s ease-out .15s both}
+.grid-card{background:var(--bg2);border-radius:12px;padding:14px 12px;text-align:left;border:1px solid var(--borl);transition:transform .2s;display:flex;flex-direction:column;gap:8px}
+.grid-card svg{stroke:var(--pl)}
+.grid-card:active{transform:scale(.97)}
+.grid-card .card-title{font-size:11px;font-weight:500;color:var(--pd);letter-spacing:.2px}
+.grid-card .card-sub{font-size:10px;color:var(--pl);font-weight:300}
+/* MAP */
+.map-section{padding:0 14px;margin-bottom:14px;animation:fadeUp .5s ease-out .2s both}
+.map-label{font-size:9px;font-weight:500;color:var(--pl);text-transform:uppercase;letter-spacing:2.5px;margin-bottom:10px;padding-left:2px}
+.map-container{border-radius:14px;overflow:hidden;border:1px solid var(--borl);background:var(--bg2)}
+.map-placeholder{height:160px;border:none;width:100%}
+.map-bottom{display:flex;align-items:center;justify-content:space-between;padding:12px 14px}
+.map-address{font-size:12px;color:var(--pd);font-weight:400}
+.map-open-btn{background:var(--btn);color:#fff;font-size:10px;font-weight:500;padding:8px 16px;border-radius:20px;letter-spacing:.8px;display:flex;align-items:center;gap:6px}
+/* SECTION TITLE */
+.section-title{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:300;margin:22px 14px 16px;letter-spacing:.5px;font-style:italic;color:var(--pd)}
+/* INFO CARDS */
+.checkin-cards{display:flex;flex-direction:column;gap:8px;padding:0 14px}
+.info-mini-row{display:flex;gap:8px}
+.info-mini-card{flex:1;background:var(--bg2);border-radius:12px;border:1px solid var(--borl);padding:16px;text-align:center}
+.info-icon-box{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.info-icon-box svg{stroke:var(--pm)}
+.info-mini-card .info-icon-box{margin:0 auto 8px}
+.info-mini-label{font-size:9px;color:var(--pl);font-weight:500;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:4px}
+.info-mini-value{font-size:20px;font-weight:500;color:var(--pd)}
+.info-card-single{background:var(--bg2);border-radius:12px;border:1px solid var(--borl);padding:14px 16px;display:flex;align-items:center;gap:12px}
+.info-card-label{font-size:9px;color:var(--pl);font-weight:500;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:3px}
+.info-card-value{font-size:15px;font-weight:500;color:var(--pd)}
+.info-card-value.code{font-size:22px;font-weight:600;letter-spacing:3px}
+.copy-btn-new{width:32px;height:32px;border-radius:8px;background:var(--lbg);border:1px solid var(--borl);display:flex;align-items:center;justify-content:center;cursor:pointer;margin-left:auto;flex-shrink:0;color:var(--pl)}
+.copy-btn-new svg{stroke:var(--pl)}
+.maps-btn{display:flex;align-items:center;justify-content:center;gap:8px;padding:14px;background:var(--btn);color:#fff;border-radius:12px;font-weight:500;font-size:13px;margin:14px 14px 0;letter-spacing:.5px}
+.maps-btn svg{stroke:#fff}
+/* BEFORE CARD */
+.before-card{background:linear-gradient(135deg,var(--wf) 0%,var(--wt) 100%);border-radius:14px;padding:20px 22px;margin:0 14px 12px;line-height:1.8;font-size:15px;color:#fff;position:relative;overflow:hidden;border:1px solid var(--bcb)}
+.before-label{display:flex;align-items:center;gap:8px;font-size:9px;font-weight:500;color:var(--am);text-transform:uppercase;letter-spacing:2px;margin-bottom:12px}
+.before-label svg{stroke:var(--am)}
+/* HOUSE INSTRUCTIONS */
+.hi-item{background:var(--bg2);border:1px solid var(--borl);border-radius:12px;margin:0 14px 8px;overflow:hidden}
+.hi-header{display:flex;align-items:center;gap:12px;padding:15px 16px;cursor:pointer}
+.hi-header:active{background:var(--lbg)}
+.hi-icon-wrap{width:32px;height:32px;border-radius:8px;background:var(--lbg);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--pl)}
+.hi-icon-wrap svg{stroke:var(--pl)}
+.hi-title{flex:1;font-weight:500;font-size:14px;letter-spacing:.2px;color:var(--pd)}
+.hi-chevron{color:var(--pl);transition:transform .3s;flex-shrink:0;display:flex}
+.hi-chevron svg{stroke:var(--pl)}
+.hi-body{padding:0 16px 16px;font-size:14px;color:var(--pm);line-height:1.8;display:none;border-top:1px solid var(--borl);padding-top:14px;font-weight:300}
+.hi-item.open .hi-body{display:block}
+.hi-item.open .hi-chevron{transform:rotate(180deg)}
+/* PLACES */
+.cat-row{display:flex;flex-wrap:wrap;gap:7px;margin:0 14px 14px}
+.cat-pill{padding:7px 14px;border-radius:20px;border:1px solid var(--bor);background:var(--bg2);font-size:12px;font-weight:400;color:var(--pd);white-space:nowrap;letter-spacing:.2px}
+.cat-pill.active{background:var(--btn);color:#fff;border-color:var(--btn)}
+.sub-divider{height:1px;border-top:1px solid var(--borl);margin:2px 20px 10px}
+.sub-row{display:flex;flex-wrap:wrap;gap:6px;margin:0 14px 14px;animation:fadeUp .3s ease-out}
+.sub-pill{padding:5px 12px;border-radius:12px;border:1px solid var(--borl);background:var(--bg2);font-size:11px;font-weight:400;color:var(--pl);white-space:nowrap}
+.sub-pill.active{background:var(--bcf);color:var(--pd);border-color:var(--bcb)}
+.place-card{background:var(--bg2);border:1px solid var(--borl);border-radius:14px;padding:16px;margin:0 14px 10px}
+.place-name{font-weight:500;font-size:16px;margin:6px 0;color:var(--pd)}
+.pick-badge{display:inline-block;background:rgba(184,134,11,.1);color:#A07820;font-size:10px;font-weight:500;padding:3px 10px;border-radius:6px;letter-spacing:.5px}
+.place-meta{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:2px}
+.cat-tag{font-size:11px;padding:3px 10px;border-radius:6px;font-weight:400;letter-spacing:.2px}
+.place-desc{font-size:13px;color:var(--pm);margin:8px 0;line-height:1.6;font-weight:300}
+.place-actions{display:flex;gap:8px;margin-top:12px}
+.place-action{padding:8px 16px;background:var(--lbg);border-radius:8px;font-size:12px;font-weight:500;color:var(--pd);letter-spacing:.3px;border:1px solid var(--borl);display:flex;align-items:center;gap:5px}
+.place-action svg{stroke:var(--pl);width:13px;height:13px}
+.dist-badge{flex-shrink:0;width:70px;min-height:70px;border-radius:12px;background:var(--lbg);border:1px solid var(--borl);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;position:relative;perspective:400px}
+.dist-badge-inner{display:flex;flex-direction:column;align-items:center;transition:transform .5s ease;transform-style:preserve-3d}
+.dist-badge.flipping .dist-badge-inner{transform:rotateY(180deg)}
+.dist-icon{display:flex;margin-bottom:2px}
+.dist-icon svg{stroke:var(--pl);width:13px;height:13px}
+.dist-badge .dist-val{font-size:18px;font-weight:600;color:var(--pd);line-height:1}
+.dist-badge .dist-unit{font-size:9px;color:var(--pl);font-weight:400;letter-spacing:.5px}
+.dist-badge .dist-time{font-size:9px;color:var(--pl);font-weight:300;margin-top:2px}
+.dist-badge .flip-hint{position:absolute;bottom:3px;right:5px;font-size:8px;color:var(--bor)}
+.place-rating{display:flex;align-items:center;gap:5px;margin-top:4px}
+.rating-star{color:#C8A84B;font-size:11px}
+.rating-val{font-size:13px;font-weight:500;color:var(--pd)}
+.rating-count{font-size:11px;color:var(--pl)}
+/* RULES */
+.rule-item{display:flex;gap:12px;align-items:flex-start;padding:14px 16px;background:var(--bg2);border:1px solid var(--borl);border-radius:12px;margin:0 14px 8px}
+.rule-item.high{border-color:rgba(200,168,75,.4);background:rgba(200,168,75,.04)}
+.rule-icon{flex-shrink:0;margin-top:1px;display:flex}
+.rule-text{font-size:14px;line-height:1.6;font-weight:300;color:var(--pd)}
+/* FAQ */
+.faq-item{width:calc(100% - 28px);text-align:left;background:var(--bg2);border:1px solid var(--borl);border-radius:12px;padding:14px 16px;margin:0 14px 8px}
+.faq-q{display:flex;justify-content:space-between;align-items:center;gap:12px;font-weight:500;font-size:14px;letter-spacing:.2px;color:var(--pd)}
+.faq-chevron{color:var(--pl);transition:transform .3s;flex-shrink:0;display:flex}
+.faq-chevron svg{stroke:var(--pl)}
+.faq-a{margin-top:12px;padding-top:12px;border-top:1px solid var(--borl);font-size:13px;color:var(--pm);line-height:1.7;display:none;font-weight:300}
+.faq-item.open .faq-a{display:block}
+.faq-item.open .faq-chevron{transform:rotate(180deg)}
+/* EMERGENCY */
+.emergency-top{text-align:center;margin:0 14px 20px}
+.emergency-big{display:inline-flex;flex-direction:column;align-items:center;gap:6px;padding:22px 44px;background:#7A1515;color:#fff;border-radius:16px;font-weight:400;letter-spacing:.5px}
+.emergency-big .sos-num{font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:300;font-style:italic}
+.emergency-big .sos-label{font-size:10px;opacity:.7;letter-spacing:2px;text-transform:uppercase}
+.contact-card{display:flex;align-items:center;gap:12px;padding:14px 16px;background:var(--bg2);border:1px solid var(--borl);border-radius:12px;margin:0 14px 8px}
+.contact-icon-wrap{width:36px;height:36px;border-radius:8px;background:var(--lbg);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--pl)}
+.contact-icon-wrap svg{stroke:var(--pl)}
+.contact-info{flex:1;display:flex;flex-direction:column;gap:2px}
+.contact-name{font-weight:500;font-size:14px;color:var(--pd)}
+.contact-avail{font-size:11px;color:var(--pl);font-weight:300;letter-spacing:.3px}
+.contact-actions{display:flex;gap:6px}
+.call-btn{display:flex;align-items:center;justify-content:center;width:38px;height:38px;background:var(--lbg);border-radius:10px;border:1px solid var(--borl);color:var(--pl)}
+.call-btn svg{stroke:var(--pl)}
+/* FOOTER */
+.footer{text-align:center;padding:20px 14px 28px}
+.footer-logo{font-family:'Cormorant Garamond',serif;font-size:13px;font-weight:400;color:var(--bor);letter-spacing:5px;text-transform:uppercase}
+.footer-sub{font-size:9px;color:var(--borl);margin-top:4px;letter-spacing:2.5px;text-transform:uppercase;font-weight:300}
+.empty{text-align:center;color:var(--pl);padding:40px 0;font-size:13px;letter-spacing:.5px;font-weight:300}
+.hidden{display:none}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</head>
+<body>
+<div id="splash-container"></div>
+<div id="loading" class="loading"><img src="logo.png" alt="Alure"><p>Loading...</p></div>
+<div id="app" class="hidden"></div>
+<script>
+const SHEET_ID='1hnxFZadQ78AX8IuvRTVAs3OmpSyUXJukP-2v3gFBmHM';
+const TABS=['Properties','HouseInstructions','Places','Rules','Emergency','FAQ'];
+const T={el:{guestGuide:'Guest guide',selectProperty:'Επιλέξτε το κατάλυμά σας',welcomeSub:'Ό,τι χρειάζεστε, σε ένα μέρος',home:'Αρχική',before:'Άφιξη',checkin:'Check-in',houseInstr:'Οδηγίες',explore:'Explore',rules:'Κανόνες',faq:'FAQ',sos:'SOS',checkinInfo:'Check-in & πληροφορίες',doorCode:'Κωδικός Lockbox',wifiPassword:'Κωδικός WiFi',parking:'Parking',openMaps:'Πλοήγηση',all:'Όλα',food:'Φαγητό',drinks:'Ποτό',cafe:'Καφές',beach:'Παραλία',attraction:'Αξιοθέατα',supermarket:'Super Market',brunch:'Brunch',village:'Χωριά',transport:'Μετακίνηση',weRecommend:'Προτείνουμε',map:'Χάρτης',call:'Κλήση',houseRules:'Κανόνες σπιτιού',faqTitle:'Συχνές ερωτήσεις',emergencyTitle:'Έκτακτη ανάγκη',panEuropean:'Πανευρωπαϊκό',noPlaces:'Δεν βρέθηκαν μέρη.',places:'μέρη',beforeTitle:'Πριν την άφιξη',houseInstrTitle:'Οδηγίες σπιτιού',firstSteps:'Πρώτα βήματα',discover:'Ανακαλύψτε',location:'Τοποθεσία',arrivalGuide:'Οδηγίες άφιξης',addr:'Διεύθυνση',hi_parking:'Στάθμευση',hi_hot_water:'Ζεστό νερό',hi_heating:'Θέρμανση',hi_fireplace:'Τζάκι',hi_ac:'Κλιματισμός',hi_tv:'Τηλεόραση',hi_trash:'Σκουπίδια',hi_dishwasher:'Πλυντήριο πιάτων',hi_washer:'Πλυντήριο ρούχων',hi_iron:'Σίδερο',hi_bbq:'BBQ',hi_pool:'Πισίνα'},en:{guestGuide:'Guest guide',selectProperty:'Select your accommodation',welcomeSub:'Everything you need, in one place',home:'Home',before:'Arrival',checkin:'Check-in',houseInstr:'House',explore:'Explore',rules:'Rules',faq:'FAQ',sos:'SOS',checkinInfo:'Check-in & info',doorCode:'Lockbox Code',wifiPassword:'WiFi Password',parking:'Parking',openMaps:'Navigate',all:'All',food:'Food',drinks:'Drinks',cafe:'Coffee',beach:'Beach',attraction:'Attractions',supermarket:'Supermarket',brunch:'Brunch',village:'Villages',transport:'Transport',weRecommend:'Our pick',map:'Map',call:'Call',houseRules:'House rules',faqTitle:'Frequently asked questions',emergencyTitle:'Emergency',panEuropean:'Pan-European',noPlaces:'No places found.',places:'places',beforeTitle:'Before arrival',houseInstrTitle:'House instructions',firstSteps:'First steps',discover:'Discover',location:'Location',arrivalGuide:'Arrival guide',addr:'Address',hi_parking:'Parking',hi_hot_water:'Hot water',hi_heating:'Heating',hi_fireplace:'Fireplace',hi_ac:'Air conditioning',hi_tv:'Television',hi_trash:'Trash',hi_dishwasher:'Dishwasher',hi_washer:'Washing machine',hi_iron:'Iron',hi_bbq:'BBQ',hi_pool:'Pool'}};
+const CAT_META={food:{color:'#C0542A'},drinks:{color:'#8A2E4E'},brunch:{color:'#A86A10'},beach:{color:'#2E78C0'},village:{color:'#4A3FA0'},transport:{color:'#1A8A68'},cafe:{color:'#A86A10'},attraction:{color:'#4A3FA0'},supermarket:{color:'#1A8A68'}};
+const HI_SVG={
+parking:`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 17V7h4a3 3 0 0 1 0 6H9"/></svg>`,
+hot_water:`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4m0 0c-3.3 0-6 2.7-6 6s2.7 6 6 6 6-2.7 6-6-2.7-6-6-6zm-3 6h6"/></svg>`,
+heating:`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"/></svg>`,
+fireplace:`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2c0 6-6 6-6 12a6 6 0 0 0 12 0c0-6-6-6-6-12zm0 14c-1.1 0-2-.9-2-2s2-4 2-4 2 2.9 2 4-.9 2-2 2z"/></svg>`,
+ac:`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="22" height="10" rx="2"/><path d="M7 17H5m14 0h-2m-5 0v4m-4-2l1.5-2m5 2l-1.5-2"/></svg>`,
+tv:`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="15" rx="2"/><polyline points="17 2 12 7 7 2"/></svg>`,
+trash:`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6m4-6v6"/><path d="M9 6V4h6v2"/></svg>`,
+dishwasher:`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="12" cy="13" r="4"/></svg>`,
+washer:`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2"/><circle cx="12" cy="13" r="5"/></svg>`,
+iron:`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 17h16l-4-8H4v8z"/><path d="M8 9V6a1 1 0 0 1 1-1h3"/></svg>`,
+bbq:`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="11" r="7"/><path d="M5.3 16.7L2 20m14.7-3.3L20 20M12 18v3"/></svg>`,
+pool:`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h20M2 18c2-2 4 0 6 0s4-2 6 0 4 0 6 0"/><path d="M7 12V6l2.5-2.5L12 6v6"/></svg>`};
+const I={
+home:`<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>`,
+compass:`<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>`,
+key:`<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>`,
+house:`<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22V12M20 22V12M2 12L12 2l10 10M9 22V16h6v6"/></svg>`,
+pin:`<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>`,
+check:`<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>`,
+help:`<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>`,
+phone:`<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.99 15a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.92 4.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 11a16 16 0 0 0 5 5l1.06-1.06a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 17.22z"/></svg>`,
+smin:`<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>`,
+copy:`<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>`,
+done:`<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`,
+back:`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>`,
+fwd:`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>`,
+chev:`<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>`,
+warn:`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C8A84B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>`,
+info:`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>`,
+walk:`<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="4" r="1"/><path d="M9 20l1-5 2 2 1-4m2-5l-3 1-1 4 2-2-1 5"/></svg>`,
+car:`<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17H3a2 2 0 0 1-2-2V9l3-5h14l3 5v6a2 2 0 0 1-2 2h-2"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/></svg>`,
+wifi:`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg>`,
+lock:`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>`};
+const HI_FIELDS=['hot_water','heating','fireplace','ac','tv','trash','dishwasher','washer','iron','bbq','pool'];
+const COL_MAP={Properties:['property_id','name','region','address','address_en','checkin_time','checkout_time','wifi_name','wifi_pass','door_code','parking','parking_en','max_guests','maps_link','image_url','check_in_directions','check_in_directions_en','drive_link','brand'],HouseInstructions:['property_id','hot_water','hot_water_en','heating','heating_en','fireplace','fireplace_en','ac','ac_en','tv','tv_en','trash','trash_en','dishwasher','dishwasher_en','washer','washer_en','iron','iron_en','bbq','bbq_en','pool','pool_en'],Places:['name','name_en','category','subcategory','subcategory_en','region','property_id','description','description_en','price_range','phone','maps_link','our_pick','rating','reviews','distance_km','driving_time','walking_time'],Rules:['property_id','category','rule_text','rule_text_en','importance'],Emergency:['region','type','name','name_en','phone','maps_link','available'],FAQ:['property_id','category','question','question_en','answer','answer_en']};
+let DATA={},lang='el',currentProp=null,currentHI=null,activeSection='home',activeCat=null,activeSub=null;
+function csvParse(csv){const rows=[];let row=[],field='',inQ=false;for(let i=0;i<csv.length;i++){const ch=csv[i];if(ch==='"'){if(inQ&&csv[i+1]==='"'){field+='"';i++;continue}inQ=!inQ;continue}if(ch===','&&!inQ){row.push(field);field='';continue}if(ch==='\n'&&!inQ){row.push(field);rows.push(row);row=[];field='';continue}if(ch==='\r'&&!inQ)continue;field+=ch}if(field||row.length){row.push(field);rows.push(row)}return rows}
+function csvToObjects(csv,tab){const parsed=csvParse(csv);if(parsed.length<2)return[];const headers=COL_MAP[tab]||parsed[0];const result=[];for(let i=1;i<parsed.length;i++){const r=parsed[i];if(r.length<2)continue;const obj={};headers.forEach((h,idx)=>obj[h]=(r[idx]||'').trim());result.push(obj)}return result}
+async function fetchSheet(tab){const url=`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(tab)}`;const res=await fetch(url);const text=await res.text();return csvToObjects(text,tab)}
+async function loadData(){try{const results=await Promise.all(TABS.map(t=>fetchSheet(t)));DATA.properties=results[0];DATA.houseInstructions=results[1];DATA.places=results[2];DATA.rules=results[3];DATA.emergency=results[4];DATA.faq=results[5];return true}catch(e){document.querySelector('.loading p').textContent='Error loading data.';console.error(e);return false}}
+function t(k){return T[lang][k]||k}
+function l(o,f){return(lang==='en'&&o[f+'_en'])?o[f+'_en']:o[f]}
+function getPlaces(){if(!currentProp)return[];return DATA.places.filter(p=>p.region===currentProp.region&&(!p.property_id||p.property_id===currentProp.property_id))}
+function getRules(){if(!currentProp)return[];return DATA.rules.filter(r=>r.property_id==='ALL'||r.property_id===currentProp.property_id)}
+function getFaq(){if(!currentProp)return[];return DATA.faq.filter(f=>f.property_id==='ALL'||f.property_id===currentProp.property_id)}
+function getEmergency(){if(!currentProp)return[];return DATA.emergency.filter(e=>e.region===currentProp.region||e.region==='ALL')}
+function getHI(){if(!currentProp)return null;return DATA.houseInstructions.find(h=>h.property_id===currentProp.property_id)||null}
+const BRAND_LOGOS={sea:'logo.png',ski:'ski_logo.png'};
+const BRAND_NAMES={sea:'Sea Alure',ski:'Ski Alure'};
+function applyBrand(brand){document.body.className=brand==='ski'?'brand-ski':'';document.querySelectorAll('.loading img').forEach(i=>i.src=BRAND_LOGOS[brand]||'logo.png')}
+function copyText(text,btn){navigator.clipboard.writeText(text).catch(()=>{});btn.innerHTML=I.done;setTimeout(()=>btn.innerHTML=I.copy,2000)}
+function toggleLang(){lang=lang==='el'?'en':'el';render()}
+function selectProp(id){currentProp=DATA.properties.find(p=>p.property_id===id);currentHI=getHI();activeSection='home';activeCat=null;applyBrand(currentProp.brand||'sea');render();window.scrollTo(0,0)}
+function goBack(){currentProp=null;currentHI=null;activeSection='home';activeCat=null;render();window.scrollTo(0,0)}
+function setSection(s){activeSection=s;activeCat=null;render();window.scrollTo({top:0,behavior:'smooth'})}
+function setCat(c){activeCat=activeCat===c?null:c;activeSub=null;render()}
+function setSub(s){activeSub=activeSub===s?null:s;render()}
+function toggleAccordion(el){el.closest('.faq-item,.hi-item').classList.toggle('open')}
+function flipDist(el){el.classList.add('flipping');setTimeout(()=>{const w=el.dataset.mode==='walk';el.dataset.mode=w?'drive':'walk';el.querySelector('.dist-icon').innerHTML=w?I.car:I.walk;el.querySelector('.dist-time').textContent='~'+(w?el.dataset.driving:el.dataset.walking);el.classList.remove('flipping')},250)}
+function render(){const app=document.getElementById('app');app.classList.remove('hidden');document.getElementById('loading').classList.add('hidden');app.innerHTML=currentProp?renderGuide():renderSelect()}
+function renderSelect(){const brand=document.body.classList.contains('brand-ski')?'ski':'sea';const logo=BRAND_LOGOS[brand];const bname=BRAND_NAMES[brand];let html=`<div class="select-screen"><div class="lang-row"><button class="lang-btn" onclick="toggleLang()">${lang==='el'?'EN':'ΕΛ'}</button></div><div class="logo-area"><img src="${logo}" alt="${bname}"><div class="brand-name">${bname}</div><p class="brand-sub">${t('guestGuide')}</p></div><p class="select-label">${t('selectProperty')}</p>`;DATA.properties.forEach(p=>{const imgStyle=p.image_url?`background-image:url(${p.image_url})`:'';html+=`<button class="prop-card" onclick="selectProp('${p.property_id}')"><div class="prop-img" style="${imgStyle}"></div><div class="prop-info"><span class="prop-name">${p.name}</span><span class="prop-addr">${l(p,'address')}</span></div><span class="prop-arrow">${I.fwd}</span></button>`});return html+'</div>'}
+function renderGuide(){const places=getPlaces();const nav=[{id:'home',ic:I.home,lb:t('home')},{id:'before',ic:I.compass,lb:t('before')},{id:'checkin',ic:I.key,lb:t('checkin')},{id:'house',ic:I.house,lb:t('houseInstr')},{id:'places',ic:I.pin,lb:t('explore')},{id:'rules',ic:I.check,lb:t('rules')},{id:'faq',ic:I.help,lb:t('faq')},{id:'emergency',ic:I.phone,lb:t('sos')}];let html=`<div class="header">${!directProp?`<button class="back-btn" onclick="goBack()">${I.back}</button>`:''}<div class="header-prop"><div class="header-title">${currentProp.name}</div><div class="header-addr">${l(currentProp,'address')}</div></div><button class="lang-btn-dark" onclick="toggleLang()">${lang==='el'?'EN':'ΕΛ'}</button></div><div class="nav">`;nav.forEach(n=>{html+=`<button class="nav-item ${activeSection===n.id?'active':''}" onclick="setSection('${n.id}')"><span class="nav-icon">${n.ic}</span><span class="nav-label">${n.lb}</span></button>`});html+=`</div><div class="content">`;if(activeSection==='home')html+=renderHome(places);else if(activeSection==='before')html+=renderBefore();else if(activeSection==='checkin')html+=renderCheckin();else if(activeSection==='house')html+=renderHouseInstr();else if(activeSection==='places')html+=renderPlaces(places);else if(activeSection==='rules')html+=renderRules();else if(activeSection==='faq')html+=renderFaqSection();else if(activeSection==='emergency')html+=renderEmergency();return html+`</div><div class="footer"><div class="footer-logo">${BRAND_NAMES[currentProp.brand||'sea']}</div><div class="footer-sub">Luxury Resorts</div></div>`}
+function renderHome(places){const hiCount=currentHI?HI_FIELDS.filter(f=>currentHI[f]).length:0;const hiSub=hiCount>0?`${hiCount} ${lang==='el'?'οδηγίες':'instructions'}`:(lang==='el'?'Θέρμανση, A/C...':'Heating, A/C...');return`<div class="welcome-banner"><div class="welcome-eyebrow">${lang==='el'?'Καλώς ήρθατε στο κατάλυμά σας':'Welcome to your stay'}</div><h2>${currentProp.name}</h2><p>${t('welcomeSub')}</p></div><div class="cards-section"><div class="cards-section-label">${t('firstSteps')}</div><div class="big-cards"><button class="big-card" onclick="setSection('before')">${I.compass}<div class="card-title">${lang==='el'?'Πριν το Check-in':'Before Check-in'}</div><div class="card-sub">${t('arrivalGuide')}</div></button><button class="big-card" onclick="setSection('checkin')">${I.key}<div class="card-title">Check-in</div><div class="card-sub">${currentProp.checkin_time}</div></button></div></div><div class="cards-section"><div class="cards-section-label">${t('discover')}</div><div class="grid-cards"><button class="grid-card" onclick="setSection('house')">${I.house}<div class="card-title">${t('houseInstr')}</div><div class="card-sub">${hiSub}</div></button><button class="grid-card" onclick="setSection('places')">${I.pin}<div class="card-title">${t('explore')}</div><div class="card-sub">${places.length} ${t('places')}</div></button><button class="grid-card" onclick="setSection('rules')">${I.check}<div class="card-title">${t('rules')}</div><div class="card-sub">${lang==='el'?'Σπιτιού':'House'}</div></button><button class="grid-card" onclick="setSection('emergency')">${I.phone}<div class="card-title">${t('sos')}</div><div class="card-sub">24/7</div></button></div></div><div class="map-section"><div class="map-label">${t('location')}</div><div class="map-container"><iframe class="map-placeholder" src="https://maps.google.com/maps?q=${encodeURIComponent(l(currentProp,'address'))}&output=embed" allowfullscreen loading="lazy"></iframe><div class="map-bottom"><div class="map-address">${l(currentProp,'address')}</div><a class="map-open-btn" href="${currentProp.maps_link}" target="_blank">${I.smin} ${t('openMaps')}</a></div></div></div>`}
+function cpBtn(val){return`<button class="copy-btn-new" onclick="copyText('${(val||'').replace(/'/g,"\\'")}',this)">${I.copy}</button>`}
+function renderBefore(){const p=currentProp;const dirs=l(p,'check_in_directions');const findUsLabel=lang==='el'?'Πώς θα μας βρείτε':'How to find us';let html=`<h2 class="section-title">${t('beforeTitle')}</h2>${dirs?`<div class="before-card"><div class="before-label">${I.smin} ${findUsLabel}</div>${dirs.replace(/\n/g,'<br>')}</div>`:''}<div class="checkin-cards">`;const av=l(p,'address');if(av)html+=`<div class="info-card-single"><div class="info-icon-box" style="background:#E0F2FE">${I.smin}</div><div style="flex:1"><div class="info-card-label">${t('addr')}</div><div class="info-card-value">${av}</div></div></div>`;if(p.door_code)html+=`<div class="info-card-single"><div class="info-icon-box" style="background:#FEF3C7">${I.lock}</div><div style="flex:1"><div class="info-card-label">${t('doorCode')}</div><div class="info-card-value code">${p.door_code}</div></div>${cpBtn(p.door_code)}</div>`;const pv=l(p,'parking');if(pv)html+=`<div class="info-card-single"><div class="info-icon-box" style="background:#F3E8FF">${HI_SVG.parking}</div><div style="flex:1"><div class="info-card-label">${t('parking')}</div><div class="info-card-value">${pv}</div></div></div>`;html+='</div>';if(p.maps_link)html+=`<a href="${p.maps_link}" target="_blank" class="maps-btn">${I.smin} ${t('openMaps')}</a>`;return html}
+function renderCheckin(){const p=currentProp;let html=`<h2 class="section-title">${t('checkinInfo')}</h2><div class="checkin-cards"><div class="info-mini-row"><div class="info-mini-card"><div class="info-icon-box" style="background:#EEF5FA">${I.key}</div><div class="info-mini-label">CHECK-IN</div><div class="info-mini-value">${p.checkin_time}</div></div><div class="info-mini-card"><div class="info-icon-box" style="background:#FEF0EE">${I.key}</div><div class="info-mini-label">CHECK-OUT</div><div class="info-mini-value">${p.checkout_time}</div></div></div>`;if(p.door_code)html+=`<div class="info-card-single"><div class="info-icon-box" style="background:#FEF3C7">${I.lock}</div><div style="flex:1"><div class="info-card-label">${t('doorCode')}</div><div class="info-card-value code">${p.door_code}</div></div>${cpBtn(p.door_code)}</div>`;if(p.wifi_name)html+=`<div class="info-card-single"><div class="info-icon-box" style="background:#EEFAF3">${I.wifi}</div><div style="flex:1"><div class="info-card-label">WiFi</div><div class="info-card-value">${p.wifi_name}</div></div>${cpBtn(p.wifi_name)}</div>`;if(p.wifi_pass)html+=`<div class="info-card-single"><div class="info-icon-box" style="background:#EEFAF3">${I.lock}</div><div style="flex:1"><div class="info-card-label">${t('wifiPassword')}</div><div class="info-card-value code">${p.wifi_pass}</div></div>${cpBtn(p.wifi_pass)}</div>`;const pv=l(p,'parking');if(pv)html+=`<div class="info-card-single"><div class="info-icon-box" style="background:#F3E8FF">${HI_SVG.parking}</div><div style="flex:1"><div class="info-card-label">${t('parking')}</div><div class="info-card-value">${pv}</div></div></div>`;html+='</div>';if(p.maps_link)html+=`<a href="${p.maps_link}" target="_blank" class="maps-btn">${I.smin} ${t('openMaps')}</a>`;return html}
+function renderHouseInstr(){let html=`<h2 class="section-title">${t('houseInstrTitle')}</h2>`;const pv=l(currentProp,'parking');if(pv)html+=`<div class="hi-item"><div class="hi-header" onclick="toggleAccordion(this)"><div class="hi-icon-wrap">${HI_SVG.parking}</div><span class="hi-title">${t('hi_parking')}</span><span class="hi-chevron">${I.chev}</span></div><div class="hi-body">${pv.replace(/\n/g,'<br>')}</div></div>`;if(!currentHI&&!pv)return html+`<p class="empty">${lang==='el'?'Δεν υπάρχουν οδηγίες.':'No instructions available.'}</p>`;if(currentHI){HI_FIELDS.forEach(f=>{const val=l(currentHI,f);if(!val)return;html+=`<div class="hi-item"><div class="hi-header" onclick="toggleAccordion(this)"><div class="hi-icon-wrap">${HI_SVG[f]||I.info}</div><span class="hi-title">${t('hi_'+f)}</span><span class="hi-chevron">${I.chev}</span></div><div class="hi-body">${val.replace(/\n/g,'<br>')}</div></div>`})}return html}
+function renderPlaces(places){let filtered=activeCat?places.filter(p=>p.category===activeCat):places;if(activeSub)filtered=filtered.filter(p=>l(p,'subcategory')===activeSub);const catLabels={food:t('food'),drinks:t('drinks'),cafe:t('cafe'),beach:t('beach'),attraction:t('attraction'),supermarket:t('supermarket'),brunch:t('brunch'),village:t('village'),transport:t('transport')};let html=`<h2 class="section-title">${t('explore')}</h2><div class="cat-row"><button class="cat-pill ${!activeCat?'active':''}" onclick="setCat(null)">${t('all')}</button>`;Object.entries(CAT_META).forEach(([key,meta])=>{const count=places.filter(p=>p.category===key).length;if(!count)return;const isActive=activeCat===key;const style=isActive?`background:${meta.color};border-color:${meta.color};color:#fff`:'';html+=`<button class="cat-pill ${isActive?'active':''}" style="${style}" onclick="setCat('${key}')">${catLabels[key]||key} (${count})</button>`});html+='</div>';if(activeCat){const cp=places.filter(p=>p.category===activeCat);const subs=[...new Set(cp.map(p=>l(p,'subcategory')).filter(s=>s))];if(subs.length>1){html+=`<div class="sub-divider"></div><div class="sub-row"><button class="sub-pill ${!activeSub?'active':''}" onclick="setSub(null)">${lang==='el'?'Όλα':'All'}</button>`;subs.forEach(s=>{const sc=cp.filter(p=>l(p,'subcategory')===s).length;html+=`<button class="sub-pill ${activeSub===s?'active':''}" onclick="setSub('${s.replace(/'/g,"\\'")}')">${s} (${sc})</button>`});html+='</div>'}}if(!filtered.length)return html+`<p class="empty">${t('noPlaces')}</p>`;filtered.forEach(place=>{const meta=CAT_META[place.category]||{color:'#888'};const isPick=place.our_pick==='yes'||place.our_pick==='TRUE';const hasRating=place.rating&&place.rating!=='';const hasDist=place.distance_km&&place.distance_km!=='';const ratingHtml=hasRating?`<div class="place-rating"><span class="rating-star">✦</span><span class="rating-val">${place.rating}</span>${place.reviews?`<span class="rating-count">(${place.reviews})</span>`:''}</div>`:'';const distHtml=hasDist?(()=>{const km=parseFloat(place.distance_km)||999;const dm=km<=2?'walk':'drive';const di=dm==='walk'?I.walk:I.car;const dt=dm==='walk'?(place.walking_time||''):(place.driving_time||'');return`<div class="dist-badge" data-mode="${dm}" data-walking="${place.walking_time||''}" data-driving="${place.driving_time||''}" data-km="${place.distance_km}" onclick="flipDist(this)"><div class="dist-badge-inner"><span class="dist-icon">${di}</span><span class="dist-val">${place.distance_km}</span><span class="dist-unit">km</span><span class="dist-time">~${dt}</span></div><span class="flip-hint">↻</span></div>`})():'';html+=`<div class="place-card"><div style="display:flex;gap:12px"><div style="flex:1"><div class="place-meta">${isPick?`<span class="pick-badge">✦ ${t('weRecommend')}</span>`:''}<span class="cat-tag" style="background:${meta.color}18;color:${meta.color}">${catLabels[place.category]||place.category}${l(place,'subcategory')?` · ${l(place,'subcategory')}`:''}</span></div><div class="place-name">${l(place,'name')}</div>${ratingHtml}${l(place,'description')?`<p class="place-desc">${l(place,'description')}</p>`:''}</div>${distHtml}</div><div class="place-actions">${place.maps_link?`<a href="${place.maps_link}" target="_blank" class="place-action">${I.smin} ${t('map')}</a>`:''}${place.phone?`<a href="tel:${place.phone}" class="place-action">${I.phone} ${t('call')}</a>`:''}</div></div>`});return html}
+function renderRules(){let html=`<h2 class="section-title">${t('houseRules')}</h2>`;getRules().forEach(r=>{const hi=r.importance==='high';html+=`<div class="rule-item ${hi?'high':''}"><span class="rule-icon">${hi?I.warn:I.info}</span><span class="rule-text">${l(r,'rule_text')}</span></div>`});return html}
+function renderFaqSection(){let html=`<h2 class="section-title">${t('faqTitle')}</h2>`;getFaq().forEach(item=>{html+=`<button class="faq-item" onclick="toggleAccordion(this)"><div class="faq-q"><span>${l(item,'question')}</span><span class="faq-chevron">${I.chev}</span></div><div class="faq-a">${l(item,'answer')}</div></button>`});return html}
+function renderEmergency(){const contacts=getEmergency();let html=`<h2 class="section-title">${t('emergencyTitle')}</h2><div class="emergency-top"><a href="tel:112" class="emergency-big">${I.phone}<div class="sos-num">112</div><div class="sos-label">${t('panEuropean')}</div></a></div>`;contacts.filter(c=>c.type!=='emergency').forEach(c=>{html+=`<div class="contact-card"><div class="contact-icon-wrap">${I.phone}</div><div class="contact-info"><span class="contact-name">${l(c,'name')}</span><span class="contact-avail">${c.available}</span></div><div class="contact-actions"><a href="tel:${c.phone}" class="call-btn">${I.phone}</a>${c.maps_link?`<a href="${c.maps_link}" target="_blank" class="call-btn">${I.smin}</a>`:''}</div></div>`});return html}
+function showSplash(){if(!currentProp)return;const brand=currentProp.brand||'sea';const imgUrl=currentProp.image_url||(BRAND_LOGOS[brand]||'logo.png');const arcText=(BRAND_NAMES[brand]||'Sea Alure').toUpperCase();const addr=l(currentProp,'address').toUpperCase();document.getElementById('splash-container').innerHTML=`<div class="splash" id="splash"><div class="splash-bg"></div><div class="splash-content"><div class="splash-logo-wrap"><svg class="splash-arc" viewBox="0 0 190 95" xmlns="http://www.w3.org/2000/svg"><defs><path id="arc" d="M 15,90 A 85,85 0 0,1 175,90"/></defs><text><textPath href="#arc" startOffset="50%" text-anchor="middle">${arcText}</textPath></text></svg><img class="splash-logo-img" src="${imgUrl}" alt="" onerror="this.src='${BRAND_LOGOS[brand]}'"></div><div class="splash-divider"></div><div class="splash-name">${currentProp.name}</div><div class="splash-loc">${addr}</div><div class="splash-loader"><div class="splash-loader-bar"></div></div></div></div>`;setTimeout(()=>{const sp=document.getElementById('splash');if(sp)sp.classList.add('hide');setTimeout(()=>{document.getElementById('splash-container').innerHTML=''},900)},4000)}
+const urlParams=new URLSearchParams(window.location.search);const directProp=urlParams.get('p');
+loadData().then(ok=>{if(!ok)return;if(directProp){const found=DATA.properties.find(p=>p.property_id===directProp);if(found){currentProp=found;currentHI=getHI();applyBrand(currentProp.brand||'sea');showSplash();setTimeout(()=>render(),100);return}}render()});
+</script>
+</body>
+</html>
