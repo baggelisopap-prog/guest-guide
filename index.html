@@ -1,3 +1,252 @@
+
+Claude finished the response
+You said: εδω απο πόσα αρχεία παίρνει δεδομένα ?
+
+<!DOCTYPE html> <html lang="el"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"> <meta name="mobile-web-app-capable" content="yes"> <meta name="apple-mobile-web-app-status-bar-style" content="black-transl
+
+pasted
+
+εδω απο πόσα αρχεία παίρνει δεδομένα ?
+
+9:47 PM
+Claude responded: Από ένα μόνο αρχείο — ένα Google Spreadsheet.
+Από ένα μόνο αρχείο — ένα Google Spreadsheet.
+
+Συγκεκριμένα, το SHEET_ID = '1hnxFZadQ78AX8IuvRTVAs3OmpSyUXJukP-2v3gFBmHM', και από αυτό φορτώνει 6 tabs (φύλλα):
+
+Properties — Καταλύματα
+HouseInstructions — Οδηγίες σπιτιού
+Places — Μέρη/Εστιατόρια/Αξιοθέατα
+Rules — Κανόνες
+Emergency — Έκτακτη ανάγκη
+FAQ — Συχνές ερωτήσεις
+Όλα φορτώνονται ταυτόχρονα (Promise.all) μέσω του Google Sheets gviz/tq API σε μορφή CSV.
+
+You said: θέλω να βρω που έχω αυτο το αρχείο πως θα το κάνω?
+θέλω να βρω που έχω αυτο το αρχείο πως θα το κάνω?
+
+9:48 PM
+Claude responded: Πήγαινε στο Google Drive σου και αναζήτησε το ID του spreadsheet.
+Πήγαινε στο Google Drive σου και αναζήτησε το ID του spreadsheet.
+
+Ο πιο εύκολος τρόπος είναι να ανοίξεις απευθείας τον παρακάτω σύνδεσμο:
+
+https://docs.google.com/spreadsheets/d/1hnxFZadQ78AX8IuvRTVAs3OmpSyUXJukP-2v3gFBmHM
+Απλά αντέγραψε το και βάλτο στο browser σου. Αν έχεις πρόσβαση, θα ανοίξει κατευθείαν το αρχείο.
+
+You said: στον κώδικα εχει και ski και sea Alure?
+στον κώδικα εχει και ski και sea Alure?
+
+9:49 PM
+Claude responded: Ναι!
+Ναι! Στον κώδικα υπάρχουν και τα δύο brands:
+
+Sea Alure (default) και Ski Alure, με διαφορετικά:
+
+Χρώματα (CSS themes):
+
+Sea → μπλε (
+#59B4F0) σε σκούρο navy background
+Ski → χρυσό (
+#C8A84B) σε σκούρο πράσινο background
+Logos:
+
+Sea → logo.png
+Ski → ski_logo.png
+Ονόματα:
+
+javascript
+const BRAND_NAMES = {
+  sea: 'Sea Alure',
+  ski: 'Ski Alure'
+}
+Το brand διαβάζεται από το spreadsheet — κάθε property έχει πεδίο brand που είναι είτε sea είτε ski. Όταν επιλέξεις κατάλυμα, η εφαρμογή αλλάζει αυτόματα theme ανάλογα.
+
+Δηλαδή ένα μόνο αρχείο HTML εξυπηρετεί και τα δύο brands! 🎯
+
+You said: δεν αλλάζει μηπώς κάνω κάτι λάθος?
+δεν αλλάζει μηπώς κάνω κάτι λάθος?
+
+9:51 PM
+Claude responded: Για να σε βοηθήσω καλύτερα, πες μου λίγο περισσότερα:
+Για να σε βοηθήσω καλύτερα, πες μου λίγο περισσότερα:
+
+Τι ακριβώς δεν αλλάζει όταν επιλέγεις ένα Ski property — το χρώμα, το logo, και τα δύο;
+
+Επίσης, στο spreadsheet σου, στη στήλη brand των Properties, τι έχεις γραμμένο; Πρέπει να είναι ακριβώς ski (lowercase, χωρίς κενά).
+
+You said: τίποτα δεν αλλάζει το βάζω στο brand S στήλη
+τίποτα δεν αλλάζει το βάζω στο brand S στήλη
+
+9:52 PM
+Claude responded: Εκεί είναι το πρόβλημα!
+Εκεί είναι το πρόβλημα! Στο COL_MAP του κώδικα, η στήλη brand είναι η τελευταία στη λίστα των Properties:
+
+javascript
+Properties: ['property_id','name','region','address','address_en',
+'checkin_time','checkout_time','wifi_name','wifi_pass','door_code',
+'parking','parking_en','max_guests','image_url','maps_link',
+'check_in_directions','check_in_directions_en','drive_link','brand']
+Αυτό σημαίνει ότι στο spreadsheet η brand πρέπει να είναι η 19η στήλη (στήλη S).
+
+Μέτρησε τις στήλες σου στο sheet:
+
+property_id
+name
+region
+address
+address_en
+checkin_time
+checkout_time
+wifi_name
+wifi_pass
+door_code
+parking
+parking_en
+max_guests
+image_url
+maps_link
+check_in_directions
+check_in_directions_en
+drive_link
+brand ← πρέπει να είναι εδώ
+Είναι σωστά τοποθετημένη η στήλη brand στη θέση 19 (S);
+
+You said: poy einai to s?
+poy einai to s?
+
+9:52 PM
+Claude responded: Στο Google Sheets οι στήλες έχουν γράμματα:
+Στο Google Sheets οι στήλες έχουν γράμματα:
+
+A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S...
+
+Οπότε S = 19η στήλη.
+
+Άνοιξε το spreadsheet σου, πήγαινε στο tab Properties και κοίτα την επικεφαλίδα της στήλης S — εκεί πρέπει να γράφει brand και από κάτω sea ή ski.
+
+Το βλέπεις;
+
+You said: ναι και αμα βάλω ski δεν αλλάζει τίποτα
+ναι και αμα βάλω ski δεν αλλάζει τίποτα
+
+9:56 PM
+Claude responded: Εντάξει, άρα το spreadsheet είναι σωστό.
+Εντάξει, άρα το spreadsheet είναι σωστό. Το πρόβλημα είναι στον κώδικα.
+
+Κοίτα αυτή τη γραμμή στη renderSelect():
+
+javascript
+const brand = document.body.classList.contains('brand-ski') ? 'ski' : 'sea';
+Αυτή διαβάζει το brand από το body class, όχι από τα δεδομένα. Στην renderSelect() δεν έχει επιλεγεί ακόμα property, οπότε δεν ξέρει το brand.
+
+Το πραγματικό πρόβλημα όμως είναι ότι το applyBrand() καλείται στη selectProp() σωστά:
+
+javascript
+function selectProp(id){
+  currentProp = DATA.properties.find(p => p.property_id === id);
+  currentHI = getHI();
+  activeSection = 'home';
+  activeCat = null;
+  applyBrand(currentProp.brand || 'sea'); // ← εδώ
+  render();
+}
+Μπορείς να κάνεις ένα τεστ; Άνοιξε τα DevTools (F12) στο browser, πήγαινε στο Console και αφού επιλέξεις ένα ski property γράψε:
+
+javascript
+console.log(currentProp.brand)
+Τι σου εμφανίζει;
+
+1778093875762_image.png
+9:57 PM
+Claude responded: Βλέπω το πρόβλημα!
+Βλέπω το πρόβλημα! Όλα εμφανίζουν sea — άρα το spreadsheet δεν διαβάζει σωστά τη στήλη brand για τα ski properties.
+
+Πήγαινε στο spreadsheet και μέτρησε προσεκτικά — μήπως έχεις κενή στήλη κάπου ανάμεσα που "σπάει" τη σειρά;
+
+Το πιο εύκολο τεστ: στο Console γράψε:
+
+javascript
+console.log(DATA.properties[0])
+Και δες αν το object που εμφανίζεται έχει brand: "ski" ή brand: "sea" για το ski property σου. Τι βλέπεις;
+
+You said: γτ μου βγάζει αυτό?
+1778093927655_image.png
+γτ μου βγάζει αυτό?
+
+9:58 PM
+Claude responded: Αυτό είναι προστασία του browser (Chrome).
+Αυτό είναι προστασία του browser (Chrome). Απλά:
+
+Γράψε allow pasting και πάτα Enter
+Μετά γράψε κανονικά το console.log(DATA.properties[0]) και πάτα Enter
+You said: ωραία ήθελε refresh.
+ωραία ήθελε refresh.
+τωρα θέλω να το εξελήξουμε λίγο.
+θέλω να βγάζει πρώτα alure που να είναι όλα και τα ski και τα sea. και μετά πατόντας να πηγαίνει μέσα στο καθένα
+
+10:04 PM
+Claude responded: Ωραία ιδέα!
+Ωραία ιδέα! Θέλεις δηλαδή ένα επιπλέον επίπεδο επιλογής:
+
+Alure (αρχική)
+├── 🌊 Sea Alure  →  επιλογή sea καταλύματος
+└── ⛷️ Ski Alure  →  επιλογή ski καταλύματος
+Πριν ξεκινήσω να γράφω κώδικα, πες μου:
+
+Πώς θέλεις να φαίνεται η αρχική "Alure" οθόνη — δύο μεγάλες κάρτες (Sea / Ski) ή κάτι άλλο όπως full-screen split;
+
+You said: στην ίδια λογικη που είναι δομιμένω το υπόλοιπο
+στην ίδια λογικη που είναι δομιμένω το υπόλοιπο
+
+10:05 PM
+Claude responded: Εντάξει, θα προσθέσω ένα brand selection screen πριν το property selection, στην ίδια αισθητική του app.
+Εντάξει, θα προσθέσω ένα brand selection screen πριν το property selection, στην ίδια αισθητική του app.
+
+Η ροή θα είναι:
+
+Brand Select → Property Select → Guide
+Στον κώδικα χρειάζεται:
+
+Νέα μεταβλητή currentBrand = null
+Νέα function renderBrandSelect() με δύο prop-card style κάρτες
+Η renderSelect() να φιλτράρει properties βάσει currentBrand
+Νέο back button από property select → brand select
+Να προχωρήσω και να σου δώσω τον ενημερωμένο κώδικα;
+
+You said: πάμε
+πάμε
+
+10:06 PM
+Claude responded: Δες τον ενημερωμένο κώδικα: Τώρα θα φτιάξω τον ενημερωμένο κώδικα με το brand selection screen: Τώρα γράφω τον νέο κώδικα.
+Δες τον ενημερωμένο κώδικα:
+
+
+Reading frontend design skill
+Reading frontend design skill
+Τώρα θα φτιάξω τον ενημερωμένο κώδικα με το brand selection screen:
+
+
+Check uploads
+Check uploads
+Τώρα γράφω τον νέο κώδικα. Οι αλλαγές είναι μόνο στο JavaScript — προσθέτω currentBrand, renderBrandSelect(), και ενημερώνω renderSelect() και goBack():
+
+
+Updated Alure guest guide with brand selection screen
+Updated Alure guest guide with brand selection screen
+
+Updated Alure guest guide with brand selection screen
+alure_guest_guide.html
+Done
+
+You are out of free messages until 2:10 AM
+
+
+
+Claude is AI and can make mistakes. Please double-check responses.
+Alure guest guide · HTML
+Copy
+
 <!DOCTYPE html>
 <html lang="el">
 <head>
@@ -136,6 +385,26 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 .loading img{width:110px;height:110px;border-radius:50%;animation:pulse 2s ease-in-out infinite}
 .loading p{color:var(--pl);font-size:11px;letter-spacing:2.5px;text-transform:uppercase;font-weight:300}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+/* BRAND SELECT SCREEN */
+.brand-select-screen{padding:24px 20px 40px;display:flex;flex-direction:column;align-items:center;gap:14px;animation:fadeUp .4s ease-out}
+.brand-select-logo-area{text-align:center;margin:16px 0 8px}
+.brand-select-logo-area img{width:90px;height:90px;border-radius:50%;object-fit:cover;margin-bottom:14px;border:1px solid rgba(255,255,255,.1)}
+.brand-select-title{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:300;color:#fff;letter-spacing:4px;text-transform:uppercase;font-style:italic}
+.brand-select-sub{font-size:10px;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:3px;margin-top:6px;font-weight:300}
+.brand-select-label{font-size:10px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:2px;margin:10px 0 4px;font-weight:300}
+.brand-card{width:100%;max-width:400px;display:flex;align-items:center;gap:16px;padding:18px 16px;border-radius:14px;text-align:left;transition:transform .2s,opacity .2s;position:relative;overflow:hidden}
+.brand-card:active{transform:scale(.98)}
+.brand-card-sea{background:linear-gradient(135deg,#030d18 0%,#071828 50%,#0d2540 100%);border:1px solid rgba(89,180,240,.25)}
+.brand-card-ski{background:linear-gradient(135deg,#060E06 0%,#0A1410 50%,#111E14 100%);border:1px solid rgba(200,168,75,.25)}
+.brand-card-img{width:56px;height:56px;border-radius:10px;object-fit:cover;flex-shrink:0;border:1px solid rgba(255,255,255,.08)}
+.brand-card-info{flex:1;display:flex;flex-direction:column;gap:5px}
+.brand-card-name{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:400;letter-spacing:2px;color:#fff}
+.brand-card-sea .brand-card-accent{font-size:10px;color:#59B4F0;font-weight:300;letter-spacing:1.5px;text-transform:uppercase}
+.brand-card-ski .brand-card-accent{font-size:10px;color:#C8A84B;font-weight:300;letter-spacing:1.5px;text-transform:uppercase}
+.brand-card-count{font-size:11px;color:rgba(255,255,255,.35);font-weight:300;letter-spacing:.3px}
+.brand-card-arrow{color:rgba(255,255,255,.3);flex-shrink:0;display:flex}
+.brand-card-glow-sea{position:absolute;top:-40px;right:-40px;width:120px;height:120px;background:radial-gradient(circle,rgba(89,180,240,.08) 0%,transparent 70%);pointer-events:none}
+.brand-card-glow-ski{position:absolute;top:-40px;right:-40px;width:120px;height:120px;background:radial-gradient(circle,rgba(200,168,75,.08) 0%,transparent 70%);pointer-events:none}
 /* SELECT SCREEN */
 .select-screen{padding:24px 20px 40px;display:flex;flex-direction:column;align-items:center;gap:14px}
 .lang-row{width:100%;display:flex;justify-content:flex-end}
@@ -146,6 +415,8 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 .brand-name{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:400;color:var(--pd);letter-spacing:5px;text-transform:uppercase}
 .brand-sub{font-size:10px;color:var(--pl);text-transform:uppercase;letter-spacing:3px;margin-top:5px;font-weight:300}
 .select-label{font-size:10px;color:var(--pl);text-transform:uppercase;letter-spacing:2px;margin:6px 0 2px;font-weight:300}
+.select-back-btn{width:100%;max-width:400px;display:flex;align-items:center;gap:8px;padding:10px 4px;font-size:12px;color:rgba(255,255,255,.4);letter-spacing:.5px;font-weight:300}
+.select-back-btn svg{stroke:rgba(255,255,255,.4)}
 .prop-card{width:100%;max-width:400px;display:flex;align-items:center;gap:14px;padding:14px;background:var(--bg2);border:1px solid var(--bor);border-radius:12px;text-align:left;transition:transform .2s}
 .prop-card:active{transform:scale(.98)}
 .prop-img{width:60px;height:60px;border-radius:8px;background-size:cover;background-position:center;flex-shrink:0;background-color:var(--lbg)}
@@ -306,7 +577,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 <script>
 const SHEET_ID='1hnxFZadQ78AX8IuvRTVAs3OmpSyUXJukP-2v3gFBmHM';
 const TABS=['Properties','HouseInstructions','Places','Rules','Emergency','FAQ'];
-const T={el:{guestGuide:'Guest guide',selectProperty:'Επιλέξτε το κατάλυμά σας',welcomeSub:'Ό,τι χρειάζεστε, σε ένα μέρος',home:'Αρχική',before:'Άφιξη',checkin:'Check-in',houseInstr:'Οδηγίες',explore:'Explore',rules:'Κανόνες',faq:'FAQ',sos:'SOS',checkinInfo:'Check-in & πληροφορίες',doorCode:'Κωδικός Lockbox',wifiPassword:'Κωδικός WiFi',parking:'Parking',openMaps:'Πλοήγηση',all:'Όλα',food:'Φαγητό',drinks:'Ποτό',cafe:'Καφές',beach:'Παραλία',attraction:'Αξιοθέατα',supermarket:'Super Market',brunch:'Brunch',village:'Χωριά',transport:'Μετακίνηση',weRecommend:'Προτείνουμε',map:'Χάρτης',call:'Κλήση',houseRules:'Κανόνες σπιτιού',faqTitle:'Συχνές ερωτήσεις',emergencyTitle:'Έκτακτη ανάγκη',panEuropean:'Πανευρωπαϊκό',noPlaces:'Δεν βρέθηκαν μέρη.',places:'μέρη',beforeTitle:'Πριν την άφιξη',houseInstrTitle:'Οδηγίες σπιτιού',firstSteps:'Πρώτα βήματα',discover:'Ανακαλύψτε',location:'Τοποθεσία',arrivalGuide:'Οδηγίες άφιξης',addr:'Διεύθυνση',hi_parking:'Στάθμευση',hi_hot_water:'Ζεστό νερό',hi_heating:'Θέρμανση',hi_fireplace:'Τζάκι',hi_ac:'Κλιματισμός',hi_tv:'Τηλεόραση',hi_trash:'Σκουπίδια',hi_dishwasher:'Πλυντήριο πιάτων',hi_washer:'Πλυντήριο ρούχων',hi_iron:'Σίδερο',hi_bbq:'BBQ',hi_pool:'Πισίνα'},en:{guestGuide:'Guest guide',selectProperty:'Select your accommodation',welcomeSub:'Everything you need, in one place',home:'Home',before:'Arrival',checkin:'Check-in',houseInstr:'House',explore:'Explore',rules:'Rules',faq:'FAQ',sos:'SOS',checkinInfo:'Check-in & info',doorCode:'Lockbox Code',wifiPassword:'WiFi Password',parking:'Parking',openMaps:'Navigate',all:'All',food:'Food',drinks:'Drinks',cafe:'Coffee',beach:'Beach',attraction:'Attractions',supermarket:'Supermarket',brunch:'Brunch',village:'Villages',transport:'Transport',weRecommend:'Our pick',map:'Map',call:'Call',houseRules:'House rules',faqTitle:'Frequently asked questions',emergencyTitle:'Emergency',panEuropean:'Pan-European',noPlaces:'No places found.',places:'places',beforeTitle:'Before arrival',houseInstrTitle:'House instructions',firstSteps:'First steps',discover:'Discover',location:'Location',arrivalGuide:'Arrival guide',addr:'Address',hi_parking:'Parking',hi_hot_water:'Hot water',hi_heating:'Heating',hi_fireplace:'Fireplace',hi_ac:'Air conditioning',hi_tv:'Television',hi_trash:'Trash',hi_dishwasher:'Dishwasher',hi_washer:'Washing machine',hi_iron:'Iron',hi_bbq:'BBQ',hi_pool:'Pool'}};
+const T={el:{guestGuide:'Guest guide',selectProperty:'Επιλέξτε το κατάλυμά σας',welcomeSub:'Ό,τι χρειάζεστε, σε ένα μέρος',home:'Αρχική',before:'Άφιξη',checkin:'Check-in',houseInstr:'Οδηγίες',explore:'Explore',rules:'Κανόνες',faq:'FAQ',sos:'SOS',checkinInfo:'Check-in & πληροφορίες',doorCode:'Κωδικός Lockbox',wifiPassword:'Κωδικός WiFi',parking:'Parking',openMaps:'Πλοήγηση',all:'Όλα',food:'Φαγητό',drinks:'Ποτό',cafe:'Καφές',beach:'Παραλία',attraction:'Αξιοθέατα',supermarket:'Super Market',brunch:'Brunch',village:'Χωριά',transport:'Μετακίνηση',weRecommend:'Προτείνουμε',map:'Χάρτης',call:'Κλήση',houseRules:'Κανόνες σπιτιού',faqTitle:'Συχνές ερωτήσεις',emergencyTitle:'Έκτακτη ανάγκη',panEuropean:'Πανευρωπαϊκό',noPlaces:'Δεν βρέθηκαν μέρη.',places:'μέρη',beforeTitle:'Πριν την άφιξη',houseInstrTitle:'Οδηγίες σπιτιού',firstSteps:'Πρώτα βήματα',discover:'Ανακαλύψτε',location:'Τοποθεσία',arrivalGuide:'Οδηγίες άφιξης',addr:'Διεύθυνση',hi_parking:'Στάθμευση',hi_hot_water:'Ζεστό νερό',hi_heating:'Θέρμανση',hi_fireplace:'Τζάκι',hi_ac:'Κλιματισμός',hi_tv:'Τηλεόραση',hi_trash:'Σκουπίδια',hi_dishwasher:'Πλυντήριο πιάτων',hi_washer:'Πλυντήριο ρούχων',hi_iron:'Σίδερο',hi_bbq:'BBQ',hi_pool:'Πισίνα',selectBrand:'Επιλέξτε brand',seaDesc:'Παραθαλάσσια καταλύματα',skiDesc:'Ορεινά καταλύματα',backToBrands:'Επιστροφή'},en:{guestGuide:'Guest guide',selectProperty:'Select your accommodation',welcomeSub:'Everything you need, in one place',home:'Home',before:'Arrival',checkin:'Check-in',houseInstr:'House',explore:'Explore',rules:'Rules',faq:'FAQ',sos:'SOS',checkinInfo:'Check-in & info',doorCode:'Lockbox Code',wifiPassword:'WiFi Password',parking:'Parking',openMaps:'Navigate',all:'All',food:'Food',drinks:'Drinks',cafe:'Coffee',beach:'Beach',attraction:'Attractions',supermarket:'Supermarket',brunch:'Brunch',village:'Villages',transport:'Transport',weRecommend:'Our pick',map:'Map',call:'Call',houseRules:'House rules',faqTitle:'Frequently asked questions',emergencyTitle:'Emergency',panEuropean:'Pan-European',noPlaces:'No places found.',places:'places',beforeTitle:'Before arrival',houseInstrTitle:'House instructions',firstSteps:'First steps',discover:'Discover',location:'Location',arrivalGuide:'Arrival guide',addr:'Address',hi_parking:'Parking',hi_hot_water:'Hot water',hi_heating:'Heating',hi_fireplace:'Fireplace',hi_ac:'Air conditioning',hi_tv:'Television',hi_trash:'Trash',hi_dishwasher:'Dishwasher',hi_washer:'Washing machine',hi_iron:'Iron',hi_bbq:'BBQ',hi_pool:'Pool',selectBrand:'Select brand',seaDesc:'Seaside properties',skiDesc:'Mountain properties',backToBrands:'Back'}};
 const CAT_META={food:{color:'#C0542A'},drinks:{color:'#8A2E4E'},brunch:{color:'#A86A10'},beach:{color:'#2E78C0'},village:{color:'#4A3FA0'},transport:{color:'#1A8A68'},cafe:{color:'#A86A10'},attraction:{color:'#4A3FA0'},supermarket:{color:'#1A8A68'}};
 const HI_SVG={
 parking:`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 17V7h4a3 3 0 0 1 0 6H9"/></svg>`,
@@ -344,7 +615,10 @@ wifi:`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="curren
 lock:`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>`};
 const HI_FIELDS=['hot_water','heating','fireplace','ac','tv','trash','dishwasher','washer','iron','bbq','pool'];
 const COL_MAP={Properties:['property_id','name','region','address','address_en','checkin_time','checkout_time','wifi_name','wifi_pass','door_code','parking','parking_en','max_guests','image_url','maps_link','check_in_directions','check_in_directions_en','drive_link','brand'],HouseInstructions:['property_id','hot_water','hot_water_en','heating','heating_en','fireplace','fireplace_en','ac','ac_en','tv','tv_en','trash','trash_en','dishwasher','dishwasher_en','washer','washer_en','iron','iron_en','bbq','bbq_en','pool','pool_en'],Places:['name','name_en','category','subcategory','subcategory_en','region','property_id','description','description_en','price_range','phone','maps_link','our_pick','rating','reviews','distance_km','driving_time','walking_time'],Rules:['property_id','category','rule_text','rule_text_en','importance'],Emergency:['region','type','name','name_en','phone','maps_link','available'],FAQ:['property_id','category','question','question_en','answer','answer_en']};
-let DATA={},lang='el',currentProp=null,currentHI=null,activeSection='home',activeCat=null,activeSub=null;
+ 
+// STATE
+let DATA={},lang='el',currentBrand=null,currentProp=null,currentHI=null,activeSection='home',activeCat=null,activeSub=null;
+ 
 function csvParse(csv){const rows=[];let row=[],field='',inQ=false;for(let i=0;i<csv.length;i++){const ch=csv[i];if(ch==='"'){if(inQ&&csv[i+1]==='"'){field+='"';i++;continue}inQ=!inQ;continue}if(ch===','&&!inQ){row.push(field);field='';continue}if(ch==='\n'&&!inQ){row.push(field);rows.push(row);row=[];field='';continue}if(ch==='\r'&&!inQ)continue;field+=ch}if(field||row.length){row.push(field);rows.push(row)}return rows}
 function csvToObjects(csv,tab){const parsed=csvParse(csv);if(parsed.length<2)return[];const headers=COL_MAP[tab]||parsed[0];const result=[];for(let i=1;i<parsed.length;i++){const r=parsed[i];if(r.length<2)continue;const obj={};headers.forEach((h,idx)=>obj[h]=(r[idx]||'').trim());result.push(obj)}return result}
 async function fetchSheet(tab){const url=`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(tab)}`;const res=await fetch(url);const text=await res.text();return csvToObjects(text,tab)}
@@ -361,15 +635,122 @@ const BRAND_NAMES={sea:'Sea Alure',ski:'Ski Alure'};
 function applyBrand(brand){document.body.className=brand==='ski'?'brand-ski':'';document.querySelectorAll('.loading img').forEach(i=>i.src=BRAND_LOGOS[brand]||'logo.png')}
 function copyText(text,btn){navigator.clipboard.writeText(text).catch(()=>{});btn.innerHTML=I.done;setTimeout(()=>btn.innerHTML=I.copy,2000)}
 function toggleLang(){lang=lang==='el'?'en':'el';render()}
-function selectProp(id){currentProp=DATA.properties.find(p=>p.property_id===id);currentHI=getHI();activeSection='home';activeCat=null;applyBrand(currentProp.brand||'sea');render();window.scrollTo(0,0)}
-function goBack(){currentProp=null;currentHI=null;activeSection='home';activeCat=null;render();window.scrollTo(0,0)}
+ 
+// NAVIGATION
+function selectBrand(brand){
+  currentBrand=brand;
+  applyBrand(brand);
+  render();
+  window.scrollTo(0,0);
+}
+function selectProp(id){
+  currentProp=DATA.properties.find(p=>p.property_id===id);
+  currentHI=getHI();
+  activeSection='home';
+  activeCat=null;
+  applyBrand(currentProp.brand||'sea');
+  render();
+  window.scrollTo(0,0);
+}
+function goBack(){
+  if(currentProp){
+    // guide → property list
+    currentProp=null;
+    currentHI=null;
+    activeSection='home';
+    activeCat=null;
+    render();
+  } else if(currentBrand){
+    // property list → brand select
+    currentBrand=null;
+    applyBrand('sea');
+    render();
+  }
+  window.scrollTo(0,0);
+}
 function setSection(s){activeSection=s;activeCat=null;render();window.scrollTo({top:0,behavior:'smooth'})}
 function setCat(c){activeCat=activeCat===c?null:c;activeSub=null;render()}
 function setSub(s){activeSub=activeSub===s?null:s;render()}
 function toggleAccordion(el){el.closest('.faq-item,.hi-item').classList.toggle('open')}
 function flipDist(el){el.classList.add('flipping');setTimeout(()=>{const w=el.dataset.mode==='walk';el.dataset.mode=w?'drive':'walk';el.querySelector('.dist-icon').innerHTML=w?I.car:I.walk;el.querySelector('.dist-time').textContent='~'+(w?el.dataset.driving:el.dataset.walking);el.classList.remove('flipping')},250)}
-function render(){const app=document.getElementById('app');app.classList.remove('hidden');document.getElementById('loading').classList.add('hidden');app.innerHTML=currentProp?renderGuide():renderSelect()}
-function renderSelect(){const brand=document.body.classList.contains('brand-ski')?'ski':'sea';const logo=BRAND_LOGOS[brand];const bname=BRAND_NAMES[brand];let html=`<div class="select-screen"><div class="lang-row"><button class="lang-btn" onclick="toggleLang()">${lang==='el'?'EN':'ΕΛ'}</button></div><div class="logo-area"><img src="${logo}" alt="${bname}"><div class="brand-name">${bname}</div><p class="brand-sub">${t('guestGuide')}</p></div><p class="select-label">${t('selectProperty')}</p>`;DATA.properties.forEach(p=>{const imgStyle=p.image_url?`background-image:url(${p.image_url})`:'';html+=`<button class="prop-card" onclick="selectProp('${p.property_id}')"><div class="prop-img" style="${imgStyle}"></div><div class="prop-info"><span class="prop-name">${p.name}</span><span class="prop-addr">${l(p,'address')}</span></div><span class="prop-arrow">${I.fwd}</span></button>`});return html+'</div>'}
+ 
+function render(){
+  const app=document.getElementById('app');
+  app.classList.remove('hidden');
+  document.getElementById('loading').classList.add('hidden');
+  if(currentProp){
+    app.innerHTML=renderGuide();
+  } else if(currentBrand){
+    app.innerHTML=renderSelect();
+  } else {
+    app.innerHTML=renderBrandSelect();
+  }
+}
+ 
+// ── BRAND SELECT ──
+function renderBrandSelect(){
+  const seaCount=DATA.properties.filter(p=>(p.brand||'sea')==='sea').length;
+  const skiCount=DATA.properties.filter(p=>p.brand==='ski').length;
+  const propLabel=lang==='el'?'κατάλυμα':'propert';
+  const propLabelPlural=lang==='el'?'καταλύματα':'properties';
+  return`<div class="brand-select-screen">
+    <div class="lang-row"><button class="lang-btn" onclick="toggleLang()">${lang==='el'?'EN':'ΕΛ'}</button></div>
+    <div class="brand-select-logo-area">
+      <img src="logo.png" alt="Alure" onerror="this.style.display='none'">
+      <div class="brand-select-title">Alure</div>
+      <p class="brand-select-sub">${t('guestGuide')}</p>
+    </div>
+    <p class="brand-select-label">${t('selectBrand')}</p>
+    <button class="brand-card brand-card-sea" onclick="selectBrand('sea')">
+      <div class="brand-card-glow-sea"></div>
+      <img class="brand-card-img" src="logo.png" alt="Sea Alure" onerror="this.style.display='none'">
+      <div class="brand-card-info">
+        <div class="brand-card-name">Sea Alure</div>
+        <div class="brand-card-accent">${t('seaDesc')}</div>
+        <div class="brand-card-count">${seaCount} ${seaCount===1?propLabel:propLabelPlural}</div>
+      </div>
+      <span class="brand-card-arrow">${I.fwd}</span>
+    </button>
+    <button class="brand-card brand-card-ski" onclick="selectBrand('ski')">
+      <div class="brand-card-glow-ski"></div>
+      <img class="brand-card-img" src="ski_logo.png" alt="Ski Alure" onerror="this.style.display='none'">
+      <div class="brand-card-info">
+        <div class="brand-card-name">Ski Alure</div>
+        <div class="brand-card-accent">${t('skiDesc')}</div>
+        <div class="brand-card-count">${skiCount} ${skiCount===1?propLabel:propLabelPlural}</div>
+      </div>
+      <span class="brand-card-arrow">${I.fwd}</span>
+    </button>
+  </div>`;
+}
+ 
+// ── PROPERTY SELECT ──
+function renderSelect(){
+  const brand=currentBrand||'sea';
+  const logo=BRAND_LOGOS[brand];
+  const bname=BRAND_NAMES[brand];
+  const props=DATA.properties.filter(p=>(p.brand||'sea')===brand);
+  let html=`<div class="select-screen">
+    <div class="lang-row"><button class="lang-btn" onclick="toggleLang()">${lang==='el'?'EN':'ΕΛ'}</button></div>
+    <div class="logo-area">
+      <img src="${logo}" alt="${bname}">
+      <div class="brand-name">${bname}</div>
+      <p class="brand-sub">${t('guestGuide')}</p>
+    </div>
+    <button class="select-back-btn" onclick="goBack()">${I.back} ${t('backToBrands')}</button>
+    <p class="select-label">${t('selectProperty')}</p>`;
+  props.forEach(p=>{
+    const imgStyle=p.image_url?`background-image:url(${p.image_url})`:'';
+    html+=`<button class="prop-card" onclick="selectProp('${p.property_id}')">
+      <div class="prop-img" style="${imgStyle}"></div>
+      <div class="prop-info"><span class="prop-name">${p.name}</span><span class="prop-addr">${l(p,'address')}</span></div>
+      <span class="prop-arrow">${I.fwd}</span>
+    </button>`;
+  });
+  if(!props.length)html+=`<p class="empty">${lang==='el'?'Δεν βρέθηκαν καταλύματα.':'No properties found.'}</p>`;
+  return html+'</div>';
+}
+ 
 function renderGuide(){const places=getPlaces();const nav=[{id:'home',ic:I.home,lb:t('home')},{id:'before',ic:I.compass,lb:t('before')},{id:'checkin',ic:I.key,lb:t('checkin')},{id:'house',ic:I.house,lb:t('houseInstr')},{id:'places',ic:I.pin,lb:t('explore')},{id:'rules',ic:I.check,lb:t('rules')},{id:'faq',ic:I.help,lb:t('faq')},{id:'emergency',ic:I.phone,lb:t('sos')}];let html=`<div class="header">${!directProp?`<button class="back-btn" onclick="goBack()">${I.back}</button>`:''}<div class="header-prop"><div class="header-title">${currentProp.name}</div><div class="header-addr">${l(currentProp,'address')}</div></div><button class="lang-btn-dark" onclick="toggleLang()">${lang==='el'?'EN':'ΕΛ'}</button></div><div class="nav">`;nav.forEach(n=>{html+=`<button class="nav-item ${activeSection===n.id?'active':''}" onclick="setSection('${n.id}')"><span class="nav-icon">${n.ic}</span><span class="nav-label">${n.lb}</span></button>`});html+=`</div><div class="content">`;if(activeSection==='home')html+=renderHome(places);else if(activeSection==='before')html+=renderBefore();else if(activeSection==='checkin')html+=renderCheckin();else if(activeSection==='house')html+=renderHouseInstr();else if(activeSection==='places')html+=renderPlaces(places);else if(activeSection==='rules')html+=renderRules();else if(activeSection==='faq')html+=renderFaqSection();else if(activeSection==='emergency')html+=renderEmergency();return html+`</div><div class="footer"><div class="footer-logo">${BRAND_NAMES[currentProp.brand||'sea']}</div><div class="footer-sub">Luxury Resorts</div></div>`}
 function renderHome(places){const hiCount=currentHI?HI_FIELDS.filter(f=>currentHI[f]).length:0;const hiSub=hiCount>0?`${hiCount} ${lang==='el'?'οδηγίες':'instructions'}`:(lang==='el'?'Θέρμανση, A/C...':'Heating, A/C...');return`<div class="welcome-banner"><div class="welcome-eyebrow">${lang==='el'?'Καλώς ήρθατε στο κατάλυμά σας':'Welcome to your stay'}</div><h2>${currentProp.name}</h2><p>${t('welcomeSub')}</p></div><div class="cards-section"><div class="cards-section-label">${t('firstSteps')}</div><div class="big-cards"><button class="big-card" onclick="setSection('before')">${I.compass}<div class="card-title">${lang==='el'?'Πριν το Check-in':'Before Check-in'}</div><div class="card-sub">${t('arrivalGuide')}</div></button><button class="big-card" onclick="setSection('checkin')">${I.key}<div class="card-title">Check-in</div><div class="card-sub">${currentProp.checkin_time}</div></button></div></div><div class="cards-section"><div class="cards-section-label">${t('discover')}</div><div class="grid-cards"><button class="grid-card" onclick="setSection('house')">${I.house}<div class="card-title">${t('houseInstr')}</div><div class="card-sub">${hiSub}</div></button><button class="grid-card" onclick="setSection('places')">${I.pin}<div class="card-title">${t('explore')}</div><div class="card-sub">${places.length} ${t('places')}</div></button><button class="grid-card" onclick="setSection('rules')">${I.check}<div class="card-title">${t('rules')}</div><div class="card-sub">${lang==='el'?'Σπιτιού':'House'}</div></button><button class="grid-card" onclick="setSection('emergency')">${I.phone}<div class="card-title">${t('sos')}</div><div class="card-sub">24/7</div></button></div></div><div class="map-section"><div class="map-label">${t('location')}</div><div class="map-container"><iframe class="map-placeholder" src="https://maps.google.com/maps?q=${encodeURIComponent(l(currentProp,'address'))}&output=embed" allowfullscreen loading="lazy"></iframe><div class="map-bottom"><div class="map-address">${l(currentProp,'address')}</div><a class="map-open-btn" href="https://maps.google.com/?q=${encodeURIComponent(l(currentProp,'address'))}" target="_blank">${I.smin} ${t('openMaps')}</a></div></div></div>`}
 function cpBtn(val){return`<button class="copy-btn-new" onclick="copyText('${(val||'').replace(/'/g,"\\'")}',this)">${I.copy}</button>`}
